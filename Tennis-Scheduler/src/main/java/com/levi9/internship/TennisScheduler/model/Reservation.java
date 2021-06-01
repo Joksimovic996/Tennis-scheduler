@@ -23,7 +23,9 @@ public class Reservation {
     @Column(name = "id")
     private Long id;
 
-    //private TennisPlayer tennisPlayerId;
+    @ManyToOne
+    @JoinColumn(name = "tennis_player_id")
+    private TennisPlayer tennisPlayerId;
 
     @Column(name = "reservation_date")
     private LocalDate reservationDate;

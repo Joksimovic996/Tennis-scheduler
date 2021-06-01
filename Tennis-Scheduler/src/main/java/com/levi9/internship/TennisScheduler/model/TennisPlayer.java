@@ -5,11 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -22,7 +20,7 @@ public class TennisPlayer {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name="name")
     private String name;
@@ -37,6 +35,9 @@ public class TennisPlayer {
     )
     private String email;
 
-    @Column(name="date_of_brith")
+    @Column(name="date_of_birth")
     private LocalDateTime dateOfBirth;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tennisPlayerId")
+    private Set<Reservation> reservations;
 }
