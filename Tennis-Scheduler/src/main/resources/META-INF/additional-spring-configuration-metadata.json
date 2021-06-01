@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "tennis-scheduler.name",
+      "type": "java.lang.String",
+      "description": "Description for tennis-scheduler.name."
+    },
+    {
+      "name": "tennis-scheduler.name",
+      "type": "java.lang.String",
+      "description": "Description for tennis-scheduler.name."
+    }
+  ] }
