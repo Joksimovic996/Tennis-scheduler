@@ -7,6 +7,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+import java.util.Set;
+
 import static javax.persistence.GenerationType.*;
 
 @Entity
@@ -30,5 +32,8 @@ public class TennisCourt {
     @ManyToOne
     @JoinColumn(name = "court_price_id")
     private TennisCourtPrice courtPrice;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tennisCourtId", fetch = FetchType.LAZY)
+    private Set<TimeSlot> timeSlots;
     
 }
