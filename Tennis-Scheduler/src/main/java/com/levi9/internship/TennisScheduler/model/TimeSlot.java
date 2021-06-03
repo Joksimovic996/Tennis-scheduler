@@ -27,9 +27,8 @@ public class TimeSlot {
     @Column(name = "end_date_and_time")
     private LocalDateTime endDateAndTime;
 
-    @ManyToOne
-    @JoinColumn(name = "tennis_court_id")
-    private TennisCourt tennisCourtId;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private TennisCourt tennisCourt;
 
     @ManyToOne
     @JoinColumn(name = "reservation_id")
