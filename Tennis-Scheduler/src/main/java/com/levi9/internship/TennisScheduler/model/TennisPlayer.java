@@ -22,14 +22,14 @@ public class TennisPlayer {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column(name="name")
+    @Column(name="first_name")
     private String name;
 
     @Column(name="last_name")
     private String lastName;
 
     @Column(
-            name="email",
+            name="email_address",
             unique = true,
             nullable = false
     )
