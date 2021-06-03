@@ -10,8 +10,6 @@ import javax.persistence.*;
 
 import java.util.Set;
 
-import static javax.persistence.CascadeType.*;
-import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.*;
 
 @Entity
@@ -19,17 +17,26 @@ import static javax.persistence.GenerationType.*;
 @Setter
 @ToString
 @NoArgsConstructor
-@Table(name = "court_price")
-public class TennisCourtPrice {
+public class TennisCourt {
 
     @Id
-    @GeneratedValue (strategy = IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
+
+    @Column(
+            name = "tennis_court_name",
+            unique = true,
+            nullable = false
+    )
+    private String name;
+
     @Column (name = "court_type")
     private TennisCourtType courtType;
+
     @Column (name = "price_per_minute")
     private Double pricePerMinute;
 
-    @OneToMany (mappedBy = "courtPrice", fetch = LAZY, cascade = ALL)
-    private Set<TennisCourt> tennisCourts;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tennisCourtId", fetch = FetchType.LAZY)
+    private Set<TimeSlot> timeSlots;
+
 }
