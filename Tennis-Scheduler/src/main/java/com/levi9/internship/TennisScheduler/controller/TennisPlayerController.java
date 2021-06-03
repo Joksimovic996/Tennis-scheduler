@@ -29,5 +29,24 @@ public class TennisPlayerController {
         return ResponseEntity.ok(playerService.getAllTennisPlayers());
     }
 
-    
+    @ApiOperation("Add tennis players")
+    @PostMapping
+    public ResponseEntity<?> addTennisPlayer(TennisPlayer tennisPlayer) {
+
+        return ResponseEntity.ok(playerService.addTennisPalyer(tennisPlayer));
+    }
+
+    @ApiOperation("Update tennis players")
+    @PutMapping
+    public ResponseEntity<?> updateTennisPlayer(TennisPlayer tennisPlayer) {
+
+        return ResponseEntity.ok(playerService.updateTennisPlayer(tennisPlayer));
+    }
+
+    @ApiOperation("Update tennis players")
+    @DeleteMapping("/{id}")
+    public void updateTennisPlayer(@PathVariable long id) {
+        playerService.deleteTennisPlayerById(id);
+    }
+
 }
