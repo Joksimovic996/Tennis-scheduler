@@ -34,8 +34,18 @@ public class TennisPlayerServiceImpl implements TennisPlayerService {
     }
 
     @Override
-    public void addTennisPlayer(TennisPlayer tennisPlayer) {
-        tennisPlayerRepository.save(tennisPlayer);
+    public TennisPlayer addTennisPalyer(TennisPlayer tennisPlayer) {
+        return tennisPlayerRepository.save(tennisPlayer);
+    }
+
+    @Override
+    public TennisPlayer updateTennisPlayer(TennisPlayer tennisPlayer) {
+        return tennisPlayerRepository.save(tennisPlayer);
+    }
+
+    @Override
+    public void deleteTennisPlayerById(Long id) {
+        tennisPlayerRepository.deleteById(id);
     }
 
 
