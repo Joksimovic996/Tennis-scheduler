@@ -1,8 +1,11 @@
 package com.levi9.internship.TennisScheduler.controller;
 
 import com.levi9.internship.TennisScheduler.model.TennisPlayer;
+import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.CreateTennisCourtDTO;
+import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.CreateTennisPlayerDTO;
 import com.levi9.internship.TennisScheduler.service.TennisPlayerService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,36 +20,33 @@ public class TennisPlayerController {
         playerService=tennisPlayerService;
     }
 
-    @ApiOperation("Get tennis player by id")
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getTennisPlayer(@PathVariable Long id) {
         return ResponseEntity.ok(playerService.getTennisPlayer(id));
     }
 
-    @ApiOperation("Get all tennis players")
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<?> getTennisPlayers() {
-        return ResponseEntity.ok(playerService.getAllTennisPlayers());
+
+        return ResponseEntity.ok(playerService.getAllPlayers());
     }
 
-    @ApiOperation("Add tennis players")
-    @PostMapping
-    public ResponseEntity<?> addTennisPlayer(TennisPlayer tennisPlayer) {
-
-        return ResponseEntity.ok(playerService.addTennisPalyer(tennisPlayer));
+    @PostMapping()
+    public ResponseEntity<?> addTennisPlayer(@RequestBody CreateTennisPlayerDTO tennisPlayerDTO) {
+        playerService.addTennisPlayer(tennisPlayerDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @ApiOperation("Update tennis players")
-    @PutMapping
-    public ResponseEntity<?> updateTennisPlayer(TennisPlayer tennisPlayer) {
-
-        return ResponseEntity.ok(playerService.updateTennisPlayer(tennisPlayer));
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateTennisPlayer(@RequestBody CreateTennisPlayerDTO tennisPlayerDTO, @PathVariable Long id) {
+        return ResponseEntity.ok(playerService.updateTennisPlayer(tennisPlayerDTO, id));
     }
 
-    @ApiOperation("Update tennis players")
     @DeleteMapping("/{id}")
-    public void updateTennisPlayer(@PathVariable long id) {
-        playerService.deleteTennisPlayerById(id);
+    public ResponseEntity<?> deleteTennisPlayer(@PathVariable Long id) {
+        playerService.deleteTennisPlayer(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
