@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Getter
@@ -19,7 +19,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class TennisPlayer {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @SequenceGenerator(name = "player_seq_gen", sequenceName = "tennis_player_seq", allocationSize = 1)
+    @GeneratedValue(strategy = SEQUENCE, generator = "player_seq_gen")
     private Long id;
 
     @Column(name="first_name")

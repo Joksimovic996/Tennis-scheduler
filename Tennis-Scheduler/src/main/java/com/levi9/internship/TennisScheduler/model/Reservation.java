@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import static javax.persistence.GenerationType.SEQUENCE;
+
 @Entity
 @Table(name = "reservation")
 @Getter
@@ -19,7 +21,8 @@ import java.util.Set;
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "reservation_seq_gen", sequenceName = "reservation_seq", allocationSize = 1)
+    @GeneratedValue(strategy = SEQUENCE, generator = "reservation_seq_gen")
     @Column(name = "id")
     private Long id;
 
