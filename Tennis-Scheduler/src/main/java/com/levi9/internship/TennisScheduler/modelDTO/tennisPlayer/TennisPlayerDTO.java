@@ -1,0 +1,21 @@
+package com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+public class TennisPlayerDTO {
+    private Long id;
+        private String name;
+        private String lastName;
+        private String email;
+        private LocalDateTime dateOfBirth;
+       /* private Set<ReservationDTO> reservations;*/
+
+}
