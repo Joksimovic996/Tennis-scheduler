@@ -32,16 +32,16 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation addReservation(Reservation reservation) {
-        return null;
+        return reservationRepository.save(reservation);
     }
 
     @Override
     public Reservation updateReservation(Reservation reservation) {
-        return null;
+        return reservationRepository.save(reservation);
     }
 
     @Override
     public void deleteReservationById(Long id) {
-
+        reservationRepository.deleteById(id);
     }
 }

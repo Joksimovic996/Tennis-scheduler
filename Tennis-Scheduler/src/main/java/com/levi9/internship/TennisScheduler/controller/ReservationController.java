@@ -24,4 +24,19 @@ public class ReservationController {
     public ResponseEntity<?> getReservations(){
         return ResponseEntity.ok(reservationService.getAllReservations());
     }
+
+    @PostMapping
+    public ResponseEntity<?> addReservation(@RequestBody Reservation r){
+        return ResponseEntity.ok(reservationService.addReservation(r));
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateReservation(@RequestBody Reservation r){
+        return ResponseEntity.ok(reservationService.updateReservation(r));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteReservation(@PathVariable Long id){
+        reservationService.deleteReservationById(id);
+    }
 }
