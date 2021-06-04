@@ -25,4 +25,9 @@
         <sqlFile path="scripts/typeChanges.sql"
                  relativeToChangelogFile="true" />
     </changeSet>
+
+    <changeSet id="Add sequences" author="Dunja">
+        <sqlFile path="scripts/seq.sql"
+                 relativeToChangelogFile="true" />
+    </changeSet>
 </databaseChangeLog>
