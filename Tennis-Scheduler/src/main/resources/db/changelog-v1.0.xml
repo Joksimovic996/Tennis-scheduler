@@ -25,4 +25,5 @@
         <sqlFile path="scripts/typeChanges.sql"
                  relativeToChangelogFile="true" />
     </changeSet>
+
 </databaseChangeLog>

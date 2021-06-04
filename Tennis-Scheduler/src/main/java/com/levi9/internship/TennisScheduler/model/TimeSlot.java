@@ -8,6 +8,8 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static javax.persistence.GenerationType.SEQUENCE;
+
 @Entity
 @Table(name = "time_slot")
 @Getter
@@ -17,8 +19,8 @@ import java.time.LocalDateTime;
 public class TimeSlot {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @SequenceGenerator(name = "slot_seq_gen", sequenceName = "time_slot_seq", allocationSize = 1)
+    @GeneratedValue(strategy = SEQUENCE, generator = "slot_seq_gen")
     private Long id;
 
     @Column(name = "start_date_and_time")

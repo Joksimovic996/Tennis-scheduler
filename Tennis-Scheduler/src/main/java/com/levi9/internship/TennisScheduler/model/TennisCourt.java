@@ -20,7 +20,8 @@ import static javax.persistence.GenerationType.*;
 public class TennisCourt {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @SequenceGenerator(name = "court_seq_gen", sequenceName = "tennis_court_seq", allocationSize = 1)
+    @GeneratedValue(strategy = SEQUENCE, generator = "court_seq_gen")
     private Long id;
 
     @Column(
