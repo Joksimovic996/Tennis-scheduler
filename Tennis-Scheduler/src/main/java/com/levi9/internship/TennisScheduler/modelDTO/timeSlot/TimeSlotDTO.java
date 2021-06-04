@@ -17,5 +17,5 @@ public class TimeSlotDTO {
     private LocalDateTime startDateAndTime;
     private LocalDateTime endDateAndTime;
     private TennisCourtDTO tennisCourt;
-    //private Reservation reservationId;
+    //private ReservationDTO reservationId;
 }

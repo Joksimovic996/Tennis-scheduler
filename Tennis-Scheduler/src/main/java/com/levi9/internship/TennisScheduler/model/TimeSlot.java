@@ -35,4 +35,6 @@ public class TimeSlot {
     @ManyToOne
     @JoinColumn(name = "reservation_id")
     private Reservation reservationId;
+
+
 }

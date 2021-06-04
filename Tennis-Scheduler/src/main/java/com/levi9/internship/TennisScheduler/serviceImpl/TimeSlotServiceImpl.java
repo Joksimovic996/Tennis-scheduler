@@ -53,7 +53,9 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
     @Override
     public void addTimeSlot(CreateTimeSlotDTO timeSlot) {
-        timeSlotRepository.save(createTimeSlotMapper.map(timeSlot));
+        TimeSlot newTimeSlot = new TimeSlot();
+        newTimeSlot = createTimeSlotMapper.map(timeSlot);
+        timeSlotRepository.save(newTimeSlot);
     }
 
     @Override

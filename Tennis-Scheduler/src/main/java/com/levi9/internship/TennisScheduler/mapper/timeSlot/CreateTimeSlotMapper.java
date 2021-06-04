@@ -6,6 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface CreateTimeSlotMapper {
-    TimeSlot map(CreateTimeSlotDTO createTimeSlotDTO);
     CreateTimeSlotDTO map(TimeSlot timeSlot);
+    TimeSlot map(CreateTimeSlotDTO createTimeSlotDTO);
 }
