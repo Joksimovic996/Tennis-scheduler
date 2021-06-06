@@ -1,14 +1,16 @@
 package com.levi9.internship.TennisScheduler.service;
 
 import com.levi9.internship.TennisScheduler.model.Reservation;
+import com.levi9.internship.TennisScheduler.modelDTO.reservation.CreateReservationDTO;
+import com.levi9.internship.TennisScheduler.modelDTO.reservation.ReservationDTO;
 
 import java.util.List;
 
 public interface ReservationService {
 
-    public Reservation getReservation(Long id);
-    public List<Reservation> getAllReservations();
-    public Reservation addReservation(Reservation reservation);
-    public Reservation updateReservation(Reservation reservation);
+    public ReservationDTO getReservation(Long id);
+    public List<ReservationDTO> getAllReservations();
+    public void addReservation(CreateReservationDTO reservation);
+    public Boolean updateReservation(CreateReservationDTO reservation,Long id);
     public void deleteReservationById(Long id);
 }
