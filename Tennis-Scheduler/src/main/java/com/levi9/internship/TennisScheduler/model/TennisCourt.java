@@ -5,9 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.*;
@@ -15,7 +17,6 @@ import static javax.persistence.GenerationType.*;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class TennisCourt {
 
@@ -39,6 +40,6 @@ public class TennisCourt {
     private Double pricePerMinute;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tennisCourt", fetch = FetchType.LAZY)
-    private Set<TimeSlot> timeSlots;
+    private Set<TimeSlot> timeSlots = new HashSet<TimeSlot>();
 
 }

@@ -15,7 +15,6 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 public class TimeSlot {
 
     @Id
@@ -29,7 +28,7 @@ public class TimeSlot {
     @Column(name = "end_date_and_time")
     private LocalDateTime endDateAndTime;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne
     private TennisCourt tennisCourt;
 
     @ManyToOne
