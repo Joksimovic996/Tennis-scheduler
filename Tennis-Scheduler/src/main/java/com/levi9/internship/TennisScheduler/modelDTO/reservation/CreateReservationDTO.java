@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -16,5 +17,5 @@ import java.util.Set;
 public class CreateReservationDTO {
     private TennisPlayerDTO playerId;
     private LocalDate reservationDate;
-    //private Set<TimeSlotDTO> timeSlots;
+    private Set<TimeSlotDTO> timeSlots = new HashSet<TimeSlotDTO>();
 }
