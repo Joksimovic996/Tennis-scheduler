@@ -28,12 +28,13 @@ public class TimeSlot {
     @Column(name = "end_date_and_time")
     private LocalDateTime endDateAndTime;
 
-    @ManyToOne
-    private TennisCourt tennisCourt;
-
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     private Reservation reservationId;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "tennis_court_id")
+    private TennisCourt tennisCourtId;
 
 
 }

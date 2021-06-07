@@ -4,10 +4,13 @@ import com.levi9.internship.TennisScheduler.exceptions.TennisException;
 import com.levi9.internship.TennisScheduler.mapper.tennisCourt.CreateTennisCourtMapper;
 import com.levi9.internship.TennisScheduler.mapper.tennisCourt.TennisCourtMapper;
 import com.levi9.internship.TennisScheduler.mapper.tennisCourt.UpdateTennisCourtMapper;
+import com.levi9.internship.TennisScheduler.mapper.timeSlot.TimeSlotMapper;
 import com.levi9.internship.TennisScheduler.model.TennisCourt;
+import com.levi9.internship.TennisScheduler.model.TimeSlot;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.CreateTennisCourtDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.UpdateTennisCourtDTO;
+import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
 import com.levi9.internship.TennisScheduler.repository.TennisCourtRepository;
 import com.levi9.internship.TennisScheduler.service.TennisCourtService;
 import org.springframework.http.HttpStatus;
@@ -23,14 +26,16 @@ public class TennisCourtServiceImpl implements TennisCourtService {
     private final TennisCourtMapper tennisCourtMapper;
     private final CreateTennisCourtMapper createTennisCourtMapper;
     private final UpdateTennisCourtMapper updateTennisCourtMapper;
+    private final TimeSlotMapper timeSlotMapper;
 
 
 
-    public TennisCourtServiceImpl(TennisCourtRepository courtRepository, TennisCourtMapper tennisCourtMapper, CreateTennisCourtMapper createTennisCourtMapper, UpdateTennisCourtMapper updateTennisCourtMapper) {
+    public TennisCourtServiceImpl(TennisCourtRepository courtRepository, TennisCourtMapper tennisCourtMapper, CreateTennisCourtMapper createTennisCourtMapper, UpdateTennisCourtMapper updateTennisCourtMapper, TimeSlotMapper timeSlotMapper) {
         this.courtRepository = courtRepository;
         this.tennisCourtMapper = tennisCourtMapper;
         this.createTennisCourtMapper = createTennisCourtMapper;
         this.updateTennisCourtMapper = updateTennisCourtMapper;
+        this.timeSlotMapper = timeSlotMapper;
     }
 
     @Override
@@ -82,5 +87,12 @@ public class TennisCourtServiceImpl implements TennisCourtService {
     @Override
     public void deleteTennisCourt(Long id) {
         courtRepository.deleteById(id);
+    }
+
+    @Override
+    public List<TimeSlotDTO> getTimeSlotsByTennisCourt(Long id) {
+        List<TimeSlotDTO> timeSlots = new ArrayList<TimeSlotDTO>();
+        courtRepository.getTimeSlotsOfTennisCourt(id).forEach(timeSlot -> timeSlots.add(timeSlotMapper.map(timeSlot)));
+        return timeSlots;
     }
 }

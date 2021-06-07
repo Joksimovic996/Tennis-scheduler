@@ -54,6 +54,11 @@ public class TennisCourtController {
         return ResponseEntity.ok(courtService.getTennisCourtByName(name));
     }
 
+    @GetMapping("/{id}/time-slots")
+    public ResponseEntity<?> getTimeSlotsOfTennisCourt(@PathVariable Long id) {
+        return ResponseEntity.ok(courtService.getTimeSlotsByTennisCourt(id));
+    }
+
 
     @GetMapping()
     @ApiOperation(

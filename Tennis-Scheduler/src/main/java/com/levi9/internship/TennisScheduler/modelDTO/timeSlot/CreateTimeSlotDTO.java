@@ -16,6 +16,6 @@ import java.time.LocalDateTime;
 public class CreateTimeSlotDTO {
     private LocalDateTime startDateAndTime;
     private LocalDateTime endDateAndTime;
-    private TennisCourtDTO tennisCourt;
-    private ReservationDTO reservationId;
+    private Long tennisCourtId;
+    private Long reservationId;
 }
