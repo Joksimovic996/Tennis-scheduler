@@ -10,7 +10,9 @@ public interface TennisCourtService {
 
     public void addTennisCourt(CreateTennisCourtDTO tennisCourtDTO);
 
-    public TennisCourtDTO getTennisCourt(Long id);
+    public TennisCourtDTO getTennisCourtById(Long id);
+
+    public TennisCourtDTO getTennisCourtByName(String name);
 
     public List<TennisCourtDTO> getAllCourts();
 

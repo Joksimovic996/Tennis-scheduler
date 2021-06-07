@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TennisCourtServiceImpl implements TennisCourtService {
@@ -36,8 +37,17 @@ public class TennisCourtServiceImpl implements TennisCourtService {
     }
 
     @Override
-    public TennisCourtDTO getTennisCourt(Long id) {
-        TennisCourt tennisCourt = courtRepository.getById(id);
+    public TennisCourtDTO getTennisCourtById(Long id) {
+        Optional<TennisCourt> tennisCourt = courtRepository.findById(id);
+        if (tennisCourt != null) {
+            return tennisCourtMapper.map(tennisCourt.get());
+        }
+        return null;
+    }
+
+    @Override
+    public TennisCourtDTO getTennisCourtByName(String name) {
+        TennisCourt tennisCourt = courtRepository.getTennisCourtByName(name);
         if (tennisCourt != null) {
             return tennisCourtMapper.map(tennisCourt);
         }
@@ -46,17 +56,9 @@ public class TennisCourtServiceImpl implements TennisCourtService {
 
     @Override
     public List<TennisCourtDTO> getAllCourts() {
-        List<TennisCourt> tempCourts = new ArrayList<>();
         List<TennisCourtDTO> tennisCourts = new ArrayList<>();
-        tempCourts = courtRepository.findAll();
-        if (!tempCourts.isEmpty()) {
-            for (TennisCourt temp : tempCourts) {
-                tennisCourts.add(tennisCourtMapper.map(temp));
-            }
-            return tennisCourts;
-        }
-        return null;
-
+        courtRepository.findAll().forEach(tennisCourt -> tennisCourts.add(tennisCourtMapper.map(tennisCourt)));
+        return tennisCourts;
     }
 
     @Override
