@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class ReservationDTO {
     private Long id;
-    private TennisPlayerDTO playerId;
-    private LocalDateTime reservationDate;
+    private TennisPlayerDTO player;
+    private LocalDate reservationDate;
     private Set<TimeSlotDTO> timeSlots;
 }
