@@ -1,8 +1,9 @@
 package com.levi9.internship.TennisScheduler.service;
 
-import com.levi9.internship.TennisScheduler.model.TennisCourt;
+import com.levi9.internship.TennisScheduler.exceptions.TennisException;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.CreateTennisCourtDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
+import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.UpdateTennisCourtDTO;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface TennisCourtService {
 
     public List<TennisCourtDTO> getAllCourts();
 
-    public Boolean updateTennisCourt(CreateTennisCourtDTO tennisCourtDTO, Long id);
+    public void updateTennisCourt(UpdateTennisCourtDTO tennisCourtDTO, Long id);
 
     public void deleteTennisCourt(Long id);
 

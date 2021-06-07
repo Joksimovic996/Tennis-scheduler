@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface TennisCourtRepository extends JpaRepository<TennisCourt, Long> {
 
+
     public Optional<TennisCourt> findById(Long id);
 
     @Query("select t from TennisCourt  t where (lower(t.name)  = lower(:courtName))")

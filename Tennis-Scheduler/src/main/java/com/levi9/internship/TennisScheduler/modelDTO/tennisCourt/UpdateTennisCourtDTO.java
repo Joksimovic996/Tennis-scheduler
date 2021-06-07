@@ -13,8 +13,7 @@ import java.util.Set;
 @Setter
 @ToString
 @NoArgsConstructor
-public class CreateTennisCourtDTO {
-    private String name;
+public class UpdateTennisCourtDTO {
     private String courtType;
     private Double pricePerMinute;
     private Set<TimeSlotDTO> timeslots = new HashSet<TimeSlotDTO>();
