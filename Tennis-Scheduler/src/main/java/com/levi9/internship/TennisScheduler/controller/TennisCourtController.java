@@ -2,6 +2,7 @@ package com.levi9.internship.TennisScheduler.controller;
 
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.CreateTennisCourtDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
+import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.UpdateTennisCourtDTO;
 import com.levi9.internship.TennisScheduler.serviceImpl.TennisCourtServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -83,8 +84,9 @@ public class TennisCourtController {
             value = "Updates The Existing Tennis Court",
             notes = "Requires an instance of CreateTennisCourtDTO and ID of the tennis court"
     )
-    public ResponseEntity<?> updateTennisCourt(@RequestBody CreateTennisCourtDTO tennisCourtDTO, @PathVariable Long id) {
-        return ResponseEntity.ok(courtService.updateTennisCourt(tennisCourtDTO, id));
+    public ResponseEntity<?> updateTennisCourt(@RequestBody UpdateTennisCourtDTO tennisCourtDTO, @PathVariable Long id) {
+        courtService.updateTennisCourt(tennisCourtDTO, id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
