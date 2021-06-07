@@ -1,43 +1,69 @@
 package com.levi9.internship.TennisScheduler.serviceImpl;
 
+import com.levi9.internship.TennisScheduler.mapper.reservation.CreateReservationMapper;
+import com.levi9.internship.TennisScheduler.mapper.reservation.ReservationMapper;
 import com.levi9.internship.TennisScheduler.model.Reservation;
+import com.levi9.internship.TennisScheduler.modelDTO.reservation.CreateReservationDTO;
+import com.levi9.internship.TennisScheduler.modelDTO.reservation.ReservationDTO;
 import com.levi9.internship.TennisScheduler.repository.ReservationRepository;
 import com.levi9.internship.TennisScheduler.service.ReservationService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
+    private final ReservationMapper reservationMapper;
+    private final CreateReservationMapper createReservationMapper;
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository){
+    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationMapper reservationMapper, CreateReservationMapper createReservationMapper){
         this.reservationRepository = reservationRepository;
+        this.reservationMapper = reservationMapper;
+        this.createReservationMapper = createReservationMapper;
     }
 
     @Override
-    public Reservation getReservation(Long id) {
+    public ReservationDTO getReservation(Long id) {
         Reservation reservation = reservationRepository.getById(id);
 
-        if (reservation != null) { return reservation; }
+        if (reservation != null) { return reservationMapper.map(reservation); }
 
         return null;
     }
 
     @Override
-    public List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
+    public List<ReservationDTO> getAllReservations() {
+        List<Reservation> tempReservations = new ArrayList<>();
+        List<ReservationDTO> reservations = new ArrayList<>();
+        tempReservations = reservationRepository.findAll();
+        if (!tempReservations.isEmpty()) {
+            for (Reservation temp : tempReservations) {
+                reservations.add(reservationMapper.map(temp));
+            }
+            return reservations;
+        }
+        return null;
     }
 
     @Override
-    public Reservation addReservation(Reservation reservation) {
-        return reservationRepository.save(reservation);
+    public void addReservation(CreateReservationDTO reservation) {
+        Reservation newReservation = new Reservation();
+        newReservation = createReservationMapper.map(reservation);
+        reservationRepository.save(newReservation);
     }
 
     @Override
-    public Reservation updateReservation(Reservation reservation) {
-        return reservationRepository.save(reservation);
+    public Boolean updateReservation(CreateReservationDTO reservation, Long id) {
+        Reservation temp = reservationRepository.getById(id);
+        if ( temp != null )  {
+            reservationRepository.save(createReservationMapper.map(reservation));
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override

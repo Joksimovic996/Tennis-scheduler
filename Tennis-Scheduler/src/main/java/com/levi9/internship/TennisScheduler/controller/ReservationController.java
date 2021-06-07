@@ -1,7 +1,9 @@
 package com.levi9.internship.TennisScheduler.controller;
 
 import com.levi9.internship.TennisScheduler.model.Reservation;
+import com.levi9.internship.TennisScheduler.modelDTO.reservation.CreateReservationDTO;
 import com.levi9.internship.TennisScheduler.serviceImpl.ReservationServiceImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,17 +28,19 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addReservation(@RequestBody Reservation r){
-        return ResponseEntity.ok(reservationService.addReservation(r));
+    public ResponseEntity<?> addReservation(@RequestBody CreateReservationDTO reservation){
+        reservationService.addReservation(reservation);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateReservation(@RequestBody Reservation r){
-        return ResponseEntity.ok(reservationService.updateReservation(r));
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateReservation(@RequestBody CreateReservationDTO reservation, @PathVariable Long id){
+        return ResponseEntity.ok(reservationService.updateReservation(reservation, id));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteReservation(@PathVariable Long id){
+    public ResponseEntity<?> deleteReservation(@PathVariable Long id){
         reservationService.deleteReservationById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

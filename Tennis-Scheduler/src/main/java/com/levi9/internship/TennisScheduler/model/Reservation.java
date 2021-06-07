@@ -26,7 +26,7 @@ public class Reservation {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "tennis_player_id")
     private TennisPlayer tennisPlayerId;
 
