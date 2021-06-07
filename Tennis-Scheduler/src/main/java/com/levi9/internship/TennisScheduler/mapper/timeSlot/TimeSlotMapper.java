@@ -7,7 +7,7 @@ import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = TennisCourtMapper.class)
 public interface TimeSlotMapper {
     TimeSlot map(TimeSlotDTO timeSlotDTO);
     TimeSlotDTO map(TimeSlot timeSlot);

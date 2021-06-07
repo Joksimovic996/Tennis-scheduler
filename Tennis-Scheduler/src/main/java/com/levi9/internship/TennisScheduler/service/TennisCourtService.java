@@ -4,6 +4,7 @@ import com.levi9.internship.TennisScheduler.exceptions.TennisException;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.CreateTennisCourtDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.UpdateTennisCourtDTO;
+import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
 
 import java.util.List;
 
@@ -20,6 +21,8 @@ public interface TennisCourtService {
     public void updateTennisCourt(UpdateTennisCourtDTO tennisCourtDTO, Long id);
 
     public void deleteTennisCourt(Long id);
+
+    public List<TimeSlotDTO> getTimeSlotsByTennisCourt(Long id);
 
 
 }
