@@ -19,6 +19,6 @@ public interface TennisCourtRepository extends JpaRepository<TennisCourt, Long> 
     @Query("select t from TennisCourt  t where (lower(t.name)  = lower(:courtName))")
     public TennisCourt getTennisCourtByName(@Param("courtName") String name);
 
-    @Query("select s from TimeSlot s where(s.tennisCourtId.id = :courtId)")
+    @Query("select s from TimeSlot s where(s.tennisCourt.id = :courtId)")
     public List<TimeSlot> getTimeSlotsOfTennisCourt(@Param("courtId") Long id);
 }

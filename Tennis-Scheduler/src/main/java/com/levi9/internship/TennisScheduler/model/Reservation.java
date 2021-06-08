@@ -28,13 +28,10 @@ public class Reservation {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "tennis_player_id")
-    private TennisPlayer tennisPlayerId;
+    private TennisPlayer tennisPlayer;
 
     @Column(name = "reservation_date")
     private LocalDate reservationDate;
 
-    @Column(name = "timeslots")
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservationId", fetch = FetchType.LAZY)
-    private Set<TimeSlot> timeSlots;
 
 }

@@ -1,17 +1,11 @@
 package com.levi9.internship.TennisScheduler.modelDTO.tennisCourt;
 
-import com.levi9.internship.TennisScheduler.enumerations.TennisCourtType;
-import com.levi9.internship.TennisScheduler.model.TimeSlot;
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -27,7 +21,6 @@ public class TennisCourtDTO {
     private String courtType;
     @ApiModelProperty(notes = "The court's price per minute")
     private Double pricePerMinute;
-    //@ApiModelProperty(notes = "The court slots")
-    private Set<TimeSlotDTO> timeSlots = new HashSet<TimeSlotDTO>();
+
 
 }

@@ -67,7 +67,9 @@ public class TennisCourtServiceImpl implements TennisCourtService {
     @Override
     public List<TennisCourtDTO> getAllCourts() {
         List<TennisCourtDTO> tennisCourts = new ArrayList<>();
-        courtRepository.findAll().forEach(tennisCourt -> tennisCourts.add(tennisCourtMapper.map(tennisCourt)));
+        courtRepository.findAll().forEach(tennisCourt -> {
+            tennisCourts.add(tennisCourtMapper.map(tennisCourt));
+        });
         return tennisCourts;
     }
 
@@ -92,7 +94,9 @@ public class TennisCourtServiceImpl implements TennisCourtService {
     @Override
     public List<TimeSlotDTO> getTimeSlotsByTennisCourt(Long id) {
         List<TimeSlotDTO> timeSlots = new ArrayList<TimeSlotDTO>();
-        courtRepository.getTimeSlotsOfTennisCourt(id).forEach(timeSlot -> timeSlots.add(timeSlotMapper.map(timeSlot)));
+        courtRepository.getTimeSlotsOfTennisCourt(id).forEach(timeSlot -> {
+            timeSlots.add(timeSlotMapper.map(timeSlot));
+        });
         return timeSlots;
     }
 }
