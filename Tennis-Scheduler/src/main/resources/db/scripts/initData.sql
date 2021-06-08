@@ -15,14 +15,14 @@ insert into tennis_player (date_of_birth,email_address,last_name,first_name) val
 insert into tennis_player (date_of_birth,email_address,last_name,first_name) values
     ('1981-01-11','viktor@gmail.com', 'Mitic','Vikor');
 
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,1);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,2);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,3);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,4);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,5);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,6);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,7);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,8);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,1,'PAY_WITH_CREDIT_CARD',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,2,'PAY_WITH_CREDIT_CARD',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,3,'PAY_WITH_CREDIT_CARD',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,4,'PAY_WITH_CASH',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,5,'PAY_WITH_CASH',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,6,'PAY_WITH_CASH',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,7,'PAY_WITH_CREDIT_CARD',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,8,'PAY_WITH_CASH',0);
 
 insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('ClayA1','CLAY_WITH_ROOF',0.5);
 insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('ClayA17','CLAY_WITHOUT_ROOF',0.25);

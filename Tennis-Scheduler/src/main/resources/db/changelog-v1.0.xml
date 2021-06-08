@@ -26,10 +26,5 @@
                  relativeToChangelogFile="true" />
     </changeSet>
 
-    <changeSet id="Change data type" author="Dunja">
-        <sqlFile path="scripts/paymentChanges.sql"
-                 relativeToChangelogFile="true" />
-    </changeSet>
-
 
 </databaseChangeLog>
