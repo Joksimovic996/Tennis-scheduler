@@ -17,4 +17,5 @@ import java.util.Set;
 public class CreateReservationDTO {
     private TennisPlayerDTO tennisPlayer;
     private LocalDate reservationDate;
+    private String paymentType;
 }
