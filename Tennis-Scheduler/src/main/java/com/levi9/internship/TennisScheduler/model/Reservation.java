@@ -1,5 +1,6 @@
 package com.levi9.internship.TennisScheduler.model;
 
+import com.levi9.internship.TennisScheduler.enumerations.PaymentType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,5 +34,10 @@ public class Reservation {
     @Column(name = "reservation_date")
     private LocalDate reservationDate;
 
+    @Column(name = "payment_type")
+    @Enumerated(EnumType.STRING)
+    private PaymentType paymentType;
 
+    @Column(name = "price")
+    private Double price;
 }

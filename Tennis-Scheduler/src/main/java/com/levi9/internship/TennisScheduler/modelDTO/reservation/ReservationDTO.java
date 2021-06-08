@@ -17,5 +17,6 @@ public class ReservationDTO {
     private Long id;
     private TennisPlayerDTO tennisPlayer;
     private LocalDate reservationDate;
-
+    private String paymentType;
+    private Double price;
 }
