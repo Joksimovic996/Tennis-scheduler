@@ -1,9 +1,6 @@
 package com.levi9.internship.TennisScheduler.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,9 +29,8 @@ public class TimeSlot {
     @JoinColumn(name = "reservation_id")
     private Reservation reservationId;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "tennis_court_id")
     private TennisCourt tennisCourtId;
-
 
 }

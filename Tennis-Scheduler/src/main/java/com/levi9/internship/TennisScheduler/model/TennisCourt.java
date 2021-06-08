@@ -4,8 +4,6 @@ import com.levi9.internship.TennisScheduler.enumerations.TennisCourtType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.persistence.*;
 

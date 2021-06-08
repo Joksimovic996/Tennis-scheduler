@@ -24,7 +24,8 @@ public class TennisCourtController {
         this.courtService = courtService;
     }
 
-    @GetMapping("/{id}")
+    // Get Tennis Court By ID
+    @GetMapping("/getById")
     @ApiOperation(
             value = "Finds Tennis Court By ID",
             notes = "Provide an ID to look up specific tennis court",
@@ -35,11 +36,13 @@ public class TennisCourtController {
                     value = "ID value for the court you need to retrieve",
                     required = true
             )
-            @PathVariable Long id) {
+            @RequestParam(name = "id") Long id) {
         return ResponseEntity.ok(courtService.getTennisCourtById(id));
     }
 
-    @GetMapping("/findByName")
+
+    // Get Tennis Court By Name
+    @GetMapping("/getByName")
     @ApiOperation(
             value = "Finds Tennis Court By Name",
             notes = "Provide name of court to look up specific tennis court",
@@ -54,12 +57,22 @@ public class TennisCourtController {
         return ResponseEntity.ok(courtService.getTennisCourtByName(name));
     }
 
+    // Get Time Slots Of Tennis Court
     @GetMapping("/{id}/time-slots")
-    public ResponseEntity<?> getTimeSlotsOfTennisCourt(@PathVariable Long id) {
+    @ApiOperation(
+            value = "Finds a List of Time Slots of Tennis Court",
+            response = List.class
+    )
+    public ResponseEntity<?> getTimeSlotsOfTennisCourt(
+            @ApiParam(
+                    value = "ID of Tennis Court",
+                    required = true
+            )
+            @PathVariable Long id) {
         return ResponseEntity.ok(courtService.getTimeSlotsByTennisCourt(id));
     }
 
-
+    // Get All Tennis Courts
     @GetMapping()
     @ApiOperation(
             value = "Finds a List Of All Tennis Courts In The System",
@@ -69,6 +82,7 @@ public class TennisCourtController {
         return ResponseEntity.ok(courtService.getAllCourts());
     }
 
+    //Add New Tennis Court
     @PostMapping()
     @ApiOperation(
             value = "Adds a New Tennis Court",
@@ -84,6 +98,7 @@ public class TennisCourtController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    // Update Tennis Court
     @PutMapping("/{id}")
     @ApiOperation(
             value = "Updates The Existing Tennis Court",
@@ -94,6 +109,7 @@ public class TennisCourtController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // Delete Tennis Court
     @DeleteMapping("/{id}")
     @ApiOperation(
             value = "Deletes The Existing Tennis Court",
