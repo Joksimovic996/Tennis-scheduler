@@ -37,6 +37,4 @@ public class TennisCourt {
     @Column (name = "price_per_minute")
     private Double pricePerMinute;
 
-    @OneToMany(mappedBy = "tennisCourtId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<TimeSlot> timeSlots = new HashSet<>();
 }

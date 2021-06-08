@@ -7,8 +7,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CreateReservationMapper {
-    @Mapping(target = "tennisPlayerId", ignore = true)
     CreateReservationDTO map(Reservation reservation);
-    @Mapping(target = "tennisPlayerId", ignore = true)
     Reservation map(CreateReservationDTO createReservationDTO);
 }

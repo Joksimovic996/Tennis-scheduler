@@ -19,6 +19,5 @@ public class TennisPlayerDTO {
         private String lastName;
         private String email;
         private LocalDateTime dateOfBirth;
-        private Set<ReservationDTO> reservations = new HashSet<ReservationDTO>();
 
 }

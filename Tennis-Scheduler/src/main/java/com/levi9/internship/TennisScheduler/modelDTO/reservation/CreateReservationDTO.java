@@ -15,8 +15,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class CreateReservationDTO {
-
-    private Long tennisPlayerId;
+    private TennisPlayerDTO tennisPlayer;
     private LocalDate reservationDate;
-    private Set<TimeSlotDTO> timeSlots = new HashSet<TimeSlotDTO>();
 }

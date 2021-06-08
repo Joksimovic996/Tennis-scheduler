@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/tennis/time_slot")
+@RequestMapping("/tennis/time-slot")
 public class TimeSlotController {
 
     private final TimeSlotServiceImpl timeSlotService;

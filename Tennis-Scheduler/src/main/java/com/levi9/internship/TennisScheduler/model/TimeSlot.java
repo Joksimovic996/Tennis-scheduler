@@ -27,10 +27,10 @@ public class TimeSlot {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
-    private Reservation reservationId;
+    private Reservation reservation;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "tennis_court_id")
-    private TennisCourt tennisCourtId;
+    private TennisCourt tennisCourt;
 
 }

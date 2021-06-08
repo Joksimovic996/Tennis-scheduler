@@ -1,5 +1,6 @@
 package com.levi9.internship.TennisScheduler.serviceImpl;
 
+import com.levi9.internship.TennisScheduler.exceptions.TennisException;
 import com.levi9.internship.TennisScheduler.mapper.timeSlot.CreateTimeSlotMapper;
 import com.levi9.internship.TennisScheduler.mapper.timeSlot.TimeSlotMapper;
 import com.levi9.internship.TennisScheduler.model.Reservation;
@@ -11,6 +12,7 @@ import com.levi9.internship.TennisScheduler.repository.ReservationRepository;
 import com.levi9.internship.TennisScheduler.repository.TennisCourtRepository;
 import com.levi9.internship.TennisScheduler.repository.TimeSlotRepository;
 import com.levi9.internship.TennisScheduler.service.TimeSlotService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,20 +39,20 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
     @Override
     public TimeSlotDTO getTimeSlot(Long id) {
-
-        TimeSlot timeSlot = timeSlotRepository.getById(id);
-
-        if (timeSlot != null) {
-            return timeSlotMapper.map(timeSlot);
+        try {
+            return timeSlotMapper.map(timeSlotRepository.getById(id));
+        } catch (Exception e) {
+            throw new TennisException(HttpStatus.NOT_FOUND, "GET METHOD: Time slot with that ID does not exist!");
         }
 
-        return null;
     }
 
     @Override
     public List<TimeSlotDTO> getAllTimeSlots() {
         List<TimeSlotDTO> timeSlots = new ArrayList<>();
-        timeSlotRepository.findAll().forEach(timeSlot -> timeSlots.add(timeSlotMapper.map(timeSlot)));
+        timeSlotRepository.findAll().forEach(timeSlot -> {
+            timeSlots.add(timeSlotMapper.map(timeSlot));
+        });
         return timeSlots;
 
     }
@@ -58,11 +60,8 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     @Override
     public void addTimeSlot(CreateTimeSlotDTO timeSlot) {
         TimeSlot newTimeSlot = new TimeSlot();
-        TennisCourt tennisCourt = tennisCourtRepository.getById(timeSlot.getTennisCourtId());
-        Reservation reservation = reservationRepository.getById(timeSlot.getReservationId());
+        //Reservation reservation = reservationRepository.getById(timeSlot.getReservationId());
         newTimeSlot = createTimeSlotMapper.map(timeSlot);
-        newTimeSlot.setTennisCourtId(tennisCourt);
-        newTimeSlot.setReservationId(reservation);
         timeSlotRepository.save(newTimeSlot);
     }
 

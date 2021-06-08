@@ -39,6 +39,4 @@ public class TennisPlayer {
     @Column(name="date_of_birth")
     private LocalDateTime dateOfBirth;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tennisPlayerId")
-    private Set<Reservation> reservations;
 }
