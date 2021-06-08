@@ -15,23 +15,23 @@ insert into tennis_player (date_of_birth,email_address,last_name,first_name) val
 insert into tennis_player (date_of_birth,email_address,last_name,first_name) values
     ('1981-01-11','viktor@gmail.com', 'Mitic','Vikor');
 
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,1);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,2);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,3);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,4);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,5);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,6);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,7);
-insert into reservation (reservation_date,tennis_player_id) values (CURRENT_DATE,8);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,1,'PAY_WITH_CREDIT_CARD',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,2,'PAY_WITH_CREDIT_CARD',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,3,'PAY_WITH_CREDIT_CARD',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,4,'PAY_WITH_CASH',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,5,'PAY_WITH_CASH',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,6,'PAY_WITH_CASH',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,7,'PAY_WITH_CREDIT_CARD',0);
+insert into reservation (reservation_date,tennis_player_id,payment_type,price) values (CURRENT_DATE,8,'PAY_WITH_CASH',0);
 
-insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('ClayA1',1,0.5);
-insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('ClayA17',2,0.25);
-insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('Grass6Y9',3,1);
-insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('Grass012',4,0.75);
-insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('Court num8',5,1.5);
-insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('Court num9',6,1.25);
-insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('Carpet6',7,2);
-insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('CarpetE78',0,0.76);
+insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('ClayA1','CLAY_WITH_ROOF',0.5);
+insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('ClayA17','CLAY_WITHOUT_ROOF',0.25);
+insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('Grass6Y9','GRASS_WITH_ROOF',1);
+insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('Grass012','GRASS_WITHOUT_ROOF',0.75);
+insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('Court num8','HARD_WITH_ROOF',1.5);
+insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('Court num9','HARD_WITHOUT_ROOF',1.25);
+insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('Carpet6','CARPET_WITH_ROOF',2);
+insert into tennis_court (tennis_court_name,court_type,price_per_minute) values ('CarpetE78','CARPET_WITHOUT_ROOF',0.76);
 
 insert into time_slot (end_date_and_time,start_date_and_time,reservation_id,tennis_court_id)
 values ('2021-06-02 14:00:00','2021-06-02 13:00:00',1,1);
