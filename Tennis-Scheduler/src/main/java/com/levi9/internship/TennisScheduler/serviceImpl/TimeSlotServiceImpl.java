@@ -27,7 +27,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     private final ReservationRepository reservationRepository;
 
 
-    public TimeSlotServiceImpl(TimeSlotRepository timeSlotRepository, TimeSlotMapper timeSlotMapper, CreateTimeSlotMapper createTimeSlotMapper, TennisCourtRepository tennisCourtRepository, ReservationRepository reservationRepository){
+    public TimeSlotServiceImpl(TimeSlotRepository timeSlotRepository, TimeSlotMapper timeSlotMapper, CreateTimeSlotMapper createTimeSlotMapper, TennisCourtRepository tennisCourtRepository, ReservationRepository reservationRepository) {
         this.timeSlotRepository = timeSlotRepository;
         this.timeSlotMapper = timeSlotMapper;
         this.createTimeSlotMapper = createTimeSlotMapper;
@@ -40,24 +40,19 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
         TimeSlot timeSlot = timeSlotRepository.getById(id);
 
-        if (timeSlot != null) { return timeSlotMapper.map(timeSlot); }
+        if (timeSlot != null) {
+            return timeSlotMapper.map(timeSlot);
+        }
 
         return null;
     }
 
     @Override
     public List<TimeSlotDTO> getAllTimeSlots() {
-
-        List<TimeSlot> tempTimeSlots = new ArrayList<>();
         List<TimeSlotDTO> timeSlots = new ArrayList<>();
-        tempTimeSlots = timeSlotRepository.findAll();
-        if (!tempTimeSlots.isEmpty()){
-            for (TimeSlot tmp : tempTimeSlots){
-                timeSlots.add(timeSlotMapper.map(tmp));
-            }
-            return timeSlots;
-        }
-        return null;
+        timeSlotRepository.findAll().forEach(timeSlot -> timeSlots.add(timeSlotMapper.map(timeSlot)));
+        return timeSlots;
+
     }
 
     @Override
@@ -74,7 +69,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     @Override
     public Boolean updateTimeSlot(CreateTimeSlotDTO timeSlot, Long id) {
         TimeSlot tmp = timeSlotRepository.getById(id);
-        if (tmp != null){
+        if (tmp != null) {
             timeSlotRepository.save(createTimeSlotMapper.map(timeSlot));
         }
         return null;

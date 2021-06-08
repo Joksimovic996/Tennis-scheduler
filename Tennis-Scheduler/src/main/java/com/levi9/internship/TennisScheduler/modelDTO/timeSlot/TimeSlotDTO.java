@@ -1,8 +1,5 @@
 package com.levi9.internship.TennisScheduler.modelDTO.timeSlot;
 
-import com.levi9.internship.TennisScheduler.model.Reservation;
-import com.levi9.internship.TennisScheduler.model.TennisCourt;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,5 +13,4 @@ public class TimeSlotDTO {
     private Long id;
     private LocalDateTime startDateAndTime;
     private LocalDateTime endDateAndTime;
-    private TennisCourtDTO tennisCourtDTO;
 }
