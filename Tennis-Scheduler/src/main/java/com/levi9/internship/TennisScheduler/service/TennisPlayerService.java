@@ -1,9 +1,6 @@
 package com.levi9.internship.TennisScheduler.service;
 
 import com.levi9.internship.TennisScheduler.model.TennisPlayer;
-import com.levi9.internship.TennisScheduler.model.TimeSlot;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.CreateTennisCourtDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.CreateTennisPlayerDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.TennisPlayerDTO;
 import com.levi9.internship.TennisScheduler.repository.TennisPlayerRepository;
@@ -23,4 +20,6 @@ public interface TennisPlayerService {
     public Boolean updateTennisPlayer(CreateTennisPlayerDTO tennisPlayerDTO, Long id);
 
     public void deleteTennisPlayer(Long id);
+
+    public TennisPlayerDTO getTennisPlayerByEmail(String email);
 }

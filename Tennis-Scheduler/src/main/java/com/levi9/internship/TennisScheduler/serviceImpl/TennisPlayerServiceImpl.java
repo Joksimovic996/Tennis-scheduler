@@ -1,6 +1,7 @@
 package com.levi9.internship.TennisScheduler.serviceImpl;
 
 
+import com.levi9.internship.TennisScheduler.exceptions.TennisException;
 import com.levi9.internship.TennisScheduler.mapper.tennisPlayer.CreateTennisPlayerMapper;
 import com.levi9.internship.TennisScheduler.mapper.tennisPlayer.TennisPlayerMapper;
 import com.levi9.internship.TennisScheduler.model.TennisCourt;
@@ -9,6 +10,7 @@ import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.CreateTennisPl
 import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.TennisPlayerDTO;
 import com.levi9.internship.TennisScheduler.repository.TennisPlayerRepository;
 import com.levi9.internship.TennisScheduler.service.TennisPlayerService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -76,5 +78,14 @@ public class TennisPlayerServiceImpl implements TennisPlayerService {
     @Override
     public void deleteTennisPlayer(Long id) {
         tennisPlayerRepository.deleteById(id);
+    }
+
+    @Override
+    public TennisPlayerDTO getTennisPlayerByEmail(String email) {
+        try {
+            return tennisPlayerMapper.map(tennisPlayerRepository.getTennisPlayerByEmail(email));
+        } catch (Exception e) {
+            throw new TennisException(HttpStatus.NOT_FOUND, "GET METHOD: Tennis Court with that name does not exist!");
+        }
     }
 }
