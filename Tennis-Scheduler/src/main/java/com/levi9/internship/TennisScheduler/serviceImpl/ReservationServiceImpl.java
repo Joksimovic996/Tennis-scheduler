@@ -3,9 +3,11 @@ package com.levi9.internship.TennisScheduler.serviceImpl;
 import com.levi9.internship.TennisScheduler.mapper.reservation.CreateReservationMapper;
 import com.levi9.internship.TennisScheduler.mapper.reservation.ReservationMapper;
 import com.levi9.internship.TennisScheduler.model.Reservation;
+import com.levi9.internship.TennisScheduler.model.TennisPlayer;
 import com.levi9.internship.TennisScheduler.modelDTO.reservation.CreateReservationDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.reservation.ReservationDTO;
 import com.levi9.internship.TennisScheduler.repository.ReservationRepository;
+import com.levi9.internship.TennisScheduler.repository.TennisPlayerRepository;
 import com.levi9.internship.TennisScheduler.service.ReservationService;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +20,13 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
     private final CreateReservationMapper createReservationMapper;
+    private final TennisPlayerRepository tennisPlayerRepository;
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationMapper reservationMapper, CreateReservationMapper createReservationMapper){
+    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationMapper reservationMapper, CreateReservationMapper createReservationMapper, TennisPlayerRepository tennisPlayerRepository){
         this.reservationRepository = reservationRepository;
         this.reservationMapper = reservationMapper;
         this.createReservationMapper = createReservationMapper;
+        this.tennisPlayerRepository = tennisPlayerRepository;
     }
 
     @Override
@@ -51,7 +55,9 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public void addReservation(CreateReservationDTO reservation) {
         Reservation newReservation = new Reservation();
+        TennisPlayer tennisPlayer = tennisPlayerRepository.getById(reservation.getTennisPlayerId());
         newReservation = createReservationMapper.map(reservation);
+        newReservation.setTennisPlayerId(tennisPlayer);
         reservationRepository.save(newReservation);
     }
 
