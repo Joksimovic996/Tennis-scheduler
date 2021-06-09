@@ -24,14 +24,16 @@ create table reservation
 (
     id int not null,
     tennis_player_id int not null,
-    reservation_date date
+    reservation_date timestamp,
+    payment_type varchar(50) not null,
+    price decimal not null
 );
 
 create table time_slot
 (
     id int not null,
-    start_date_and_time date,
-    end_date_and_time date,
+    start_date_and_time timestamp,
+    end_date_and_time timestamp,
     tennis_court_id int not null,
     reservation_id int not null
 );
