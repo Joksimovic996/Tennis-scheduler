@@ -11,6 +11,8 @@ import com.levi9.internship.TennisScheduler.repository.TennisPlayerRepository;
 import com.levi9.internship.TennisScheduler.service.ReservationService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +58,8 @@ public class ReservationServiceImpl implements ReservationService {
     public void addReservation(CreateReservationDTO reservation) {
         Reservation newReservation = new Reservation();
         newReservation = createReservationMapper.map(reservation);
+        newReservation.setReservationDate(LocalDateTime.now());
+        newReservation.setPrice(0.0);
         reservationRepository.save(newReservation);
     }
 

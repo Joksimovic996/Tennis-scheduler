@@ -32,7 +32,7 @@ public class Reservation {
     private TennisPlayer tennisPlayer;
 
     @Column(name = "reservation_date")
-    private LocalDate reservationDate;
+    private LocalDateTime reservationDate;
 
     @Column(name = "payment_type")
     @Enumerated(EnumType.STRING)

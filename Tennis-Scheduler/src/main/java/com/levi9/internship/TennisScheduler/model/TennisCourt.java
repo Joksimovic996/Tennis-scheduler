@@ -31,7 +31,7 @@ public class TennisCourt {
     private String name;
 
     @Column (name = "court_type")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private TennisCourtType courtType;
 
     @Column (name = "price_per_minute")

@@ -16,6 +16,5 @@ import java.util.Set;
 @NoArgsConstructor
 public class CreateReservationDTO {
     private TennisPlayerDTO tennisPlayer;
-    private LocalDate reservationDate;
     private String paymentType;
 }

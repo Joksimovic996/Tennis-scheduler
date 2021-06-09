@@ -58,10 +58,13 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     }
 
     @Override
-    public void addTimeSlot(CreateTimeSlotDTO timeSlot) {
+    public void addTimeSlot(CreateTimeSlotDTO timeSlot, Long reservationId, Long courtId) {
         TimeSlot newTimeSlot = new TimeSlot();
-        //Reservation reservation = reservationRepository.getById(timeSlot.getReservationId());
+        Reservation reservation = reservationRepository.getById(reservationId);
+        TennisCourt tennisCourt = tennisCourtRepository.getById(courtId);
         newTimeSlot = createTimeSlotMapper.map(timeSlot);
+        newTimeSlot.setReservation(reservation);
+        newTimeSlot.setTennisCourt(tennisCourt);
         timeSlotRepository.save(newTimeSlot);
     }
 
