@@ -28,8 +28,9 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addReservation(@RequestBody CreateReservationDTO reservation){
-        reservationService.addReservation(reservation);
+    public ResponseEntity<?> addReservation(@RequestParam(name = "tennisPlayerId") Long tennisPlayerId,
+                                            @RequestBody CreateReservationDTO reservation){
+        reservationService.addReservation(reservation, tennisPlayerId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

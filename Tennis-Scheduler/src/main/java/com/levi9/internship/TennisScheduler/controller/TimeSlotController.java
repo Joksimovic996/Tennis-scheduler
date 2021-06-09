@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/tennis/time-slot")
 public class TimeSlotController {
@@ -28,8 +30,9 @@ public class TimeSlotController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addTimeSlot(@RequestBody CreateTimeSlotDTO timeSlotDTO){
-        timeSlotService.addTimeSlot(timeSlotDTO);
+    public ResponseEntity<?> addTimeSlot(@Valid @RequestBody CreateTimeSlotDTO timeSlotDTO, @RequestParam(name = "reservationId") Long reservationId,
+                                         @RequestParam(name = "courtId")Long courtId){
+        timeSlotService.addTimeSlot(timeSlotDTO, reservationId, courtId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

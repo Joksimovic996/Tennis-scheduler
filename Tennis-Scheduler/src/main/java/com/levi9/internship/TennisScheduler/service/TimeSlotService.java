@@ -10,7 +10,7 @@ public interface TimeSlotService {
 
     public TimeSlotDTO getTimeSlot(Long id);
     public List<TimeSlotDTO> getAllTimeSlots();
-    public void addTimeSlot(CreateTimeSlotDTO timeSlotDTO);
+    public void addTimeSlot(CreateTimeSlotDTO timeSlotDTO, Long reservationId, Long courtId);
     public Boolean updateTimeSlot(CreateTimeSlotDTO timeSlotDTO, Long id);
     public void deleteTimeSlotById(Long id);
 }

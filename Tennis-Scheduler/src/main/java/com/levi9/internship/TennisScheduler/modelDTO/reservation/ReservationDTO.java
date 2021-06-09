@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ import java.util.Set;
 public class ReservationDTO {
     private Long id;
     private TennisPlayerDTO tennisPlayer;
-    private LocalDate reservationDate;
+    private LocalDateTime reservationDate;
     private String paymentType;
     private Double price;
 }
