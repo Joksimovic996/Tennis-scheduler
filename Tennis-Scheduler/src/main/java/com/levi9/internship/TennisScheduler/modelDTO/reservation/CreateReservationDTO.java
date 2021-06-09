@@ -15,6 +15,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class CreateReservationDTO {
-    private TennisPlayerDTO tennisPlayer;
+
     private String paymentType;
 }

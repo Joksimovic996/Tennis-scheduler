@@ -55,11 +55,13 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public void addReservation(CreateReservationDTO reservation) {
+    public void addReservation(CreateReservationDTO reservation, Long tennisPlayerId) {
         Reservation newReservation = new Reservation();
+        TennisPlayer tennisPlayer = tennisPlayerRepository.getById(tennisPlayerId);
         newReservation = createReservationMapper.map(reservation);
         newReservation.setReservationDate(LocalDateTime.now());
         newReservation.setPrice(0.0);
+        newReservation.setTennisPlayer(tennisPlayer);
         reservationRepository.save(newReservation);
     }
 
