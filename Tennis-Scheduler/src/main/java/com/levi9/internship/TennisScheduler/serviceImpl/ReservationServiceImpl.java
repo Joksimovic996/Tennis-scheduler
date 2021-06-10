@@ -72,14 +72,27 @@ public class ReservationServiceImpl implements ReservationService {
         List<TimeSlot> tempSlots = new ArrayList<>();
         Double price = 0.0;
         newReservation = createReservationMapper.map(reservation);
+
+        List<TimeSlot> slotsInBase = new ArrayList<>();
+        Boolean doNotReserve = false;
         for(CreateTimeSlotDTO timeSlotDTO : reservation.getTimeSlots()) {
-            TimeSlot temp = timeSlotMapper.map(timeSlotDTO);
-            temp.setReservation(newReservation);
-            TennisCourt tennisCourt = tennisCourtRepository.getById(timeSlotDTO.getTennisCourt());
-            temp.setTennisCourt(tennisCourt);
-            tempSlots.add(temp);
-            int minutesToPlay = (temp.getEndDateAndTime().getHour() * 60 + temp.getEndDateAndTime().getMinute()) - (temp.getStartDateAndTime().getHour() * 60 + temp.getStartDateAndTime().getMinute());
-            price += minutesToPlay * temp.getTennisCourt().getPricePerMinute();
+
+            slotsInBase = timeSlotRepository.getTimeSlotOfSameDateAndCourt(timeSlotDTO.getStartDateAndTime(), timeSlotDTO.getEndDateAndTime(), timeSlotDTO.getTennisCourt());
+
+            if (slotsInBase.isEmpty()){
+                TimeSlot temp = timeSlotMapper.map(timeSlotDTO);
+                temp.setReservation(newReservation);
+                TennisCourt tennisCourt = tennisCourtRepository.getById(timeSlotDTO.getTennisCourt());
+                temp.setTennisCourt(tennisCourt);
+                tempSlots.add(temp);
+                int minutesToPlay = (temp.getEndDateAndTime().getHour() * 60 + temp.getEndDateAndTime().getMinute()) - (temp.getStartDateAndTime().getHour() * 60 + temp.getStartDateAndTime().getMinute());
+                price += minutesToPlay * temp.getTennisCourt().getPricePerMinute();
+            } else {
+                doNotReserve = true;
+                System.out.println("POKLAPANJE: " + timeSlotDTO.getStartDateAndTime().toString() +" "+timeSlotDTO.getEndDateAndTime().toString());
+            }
+
+
         }
 
         if(tempSlots.size() >= 5 ){
@@ -90,7 +103,11 @@ public class ReservationServiceImpl implements ReservationService {
         newReservation.setPrice(price);
         newReservation.setTennisPlayer(tennisPlayer);
 
-        reservationRepository.save(newReservation);
+        if(!doNotReserve) {
+            reservationRepository.save(newReservation);
+        }else {
+            System.out.println("NE ME ZE!");
+        }
         for(TimeSlot temp : tempSlots) {
             timeSlotRepository.save(temp);
         }

@@ -3,10 +3,6 @@ package com.levi9.internship.TennisScheduler.serviceImpl;
 import com.levi9.internship.TennisScheduler.exceptions.TennisException;
 import com.levi9.internship.TennisScheduler.mapper.timeSlot.CreateTimeSlotMapper;
 import com.levi9.internship.TennisScheduler.mapper.timeSlot.TimeSlotMapper;
-import com.levi9.internship.TennisScheduler.model.Reservation;
-import com.levi9.internship.TennisScheduler.model.TennisCourt;
-import com.levi9.internship.TennisScheduler.model.TimeSlot;
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.CreateTimeSlotDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
 import com.levi9.internship.TennisScheduler.repository.ReservationRepository;
 import com.levi9.internship.TennisScheduler.repository.TennisCourtRepository;
@@ -57,28 +53,4 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
     }
 
-    @Override
-    public void addTimeSlot(CreateTimeSlotDTO timeSlot, Long reservationId, Long courtId) {
-        TimeSlot newTimeSlot = new TimeSlot();
-        Reservation reservation = reservationRepository.getById(reservationId);
-        TennisCourt tennisCourt = tennisCourtRepository.getById(courtId);
-        newTimeSlot = createTimeSlotMapper.map(timeSlot);
-        newTimeSlot.setReservation(reservation);
-        newTimeSlot.setTennisCourt(tennisCourt);
-        timeSlotRepository.save(newTimeSlot);
-    }
-
-    @Override
-    public Boolean updateTimeSlot(CreateTimeSlotDTO timeSlot, Long id) {
-        TimeSlot tmp = timeSlotRepository.getById(id);
-        if (tmp != null) {
-            timeSlotRepository.save(createTimeSlotMapper.map(timeSlot));
-        }
-        return null;
-    }
-
-    @Override
-    public void deleteTimeSlotById(Long id) {
-        timeSlotRepository.deleteById(id);
-    }
 }
