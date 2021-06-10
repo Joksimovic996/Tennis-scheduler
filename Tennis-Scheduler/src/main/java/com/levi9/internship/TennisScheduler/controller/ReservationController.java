@@ -2,10 +2,14 @@ package com.levi9.internship.TennisScheduler.controller;
 
 import com.levi9.internship.TennisScheduler.model.Reservation;
 import com.levi9.internship.TennisScheduler.modelDTO.reservation.CreateReservationDTO;
+import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.CreateTimeSlotDTO;
 import com.levi9.internship.TennisScheduler.serviceImpl.ReservationServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/tennis/reservation")
@@ -29,7 +33,11 @@ public class ReservationController {
 
     @PostMapping
     public ResponseEntity<?> addReservation(@RequestParam(name = "tennisPlayerId") Long tennisPlayerId,
-                                            @RequestBody CreateReservationDTO reservation){
+                                            @Valid @RequestBody CreateReservationDTO reservation){
+
+        System.out.println("ENDPOINT!!!!!!");
+        System.out.println(reservation.getPaymentType().toString());
+
         reservationService.addReservation(reservation, tennisPlayerId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

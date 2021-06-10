@@ -3,6 +3,7 @@ package com.levi9.internship.TennisScheduler.service;
 import com.levi9.internship.TennisScheduler.model.Reservation;
 import com.levi9.internship.TennisScheduler.modelDTO.reservation.CreateReservationDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.reservation.ReservationDTO;
+import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.CreateTimeSlotDTO;
 
 import java.util.List;
 

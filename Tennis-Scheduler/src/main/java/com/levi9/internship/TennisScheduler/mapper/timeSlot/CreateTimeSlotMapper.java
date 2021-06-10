@@ -9,6 +9,8 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CreateTimeSlotMapper {
+    @Mapping(target = "tennisCourt",ignore = true)
     CreateTimeSlotDTO map(TimeSlot timeSlot);
+    @Mapping(target = "tennisCourt",ignore = true)
     TimeSlot map(CreateTimeSlotDTO createTimeSlotDTO);
 }
