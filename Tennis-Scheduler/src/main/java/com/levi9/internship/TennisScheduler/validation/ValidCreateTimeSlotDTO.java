@@ -8,11 +8,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Constraint(validatedBy = {CreateTimeSlotDTOValidator.class})
-@Target({ElementType.TYPE})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidCreateTimeSlotDTO {
 
-    String message() default "End date of reservation must be after start date of the reservation";
+    String message() default "default";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

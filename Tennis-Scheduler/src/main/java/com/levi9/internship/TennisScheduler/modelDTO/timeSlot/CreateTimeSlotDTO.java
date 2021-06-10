@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@ValidCreateTimeSlotDTO
 public class CreateTimeSlotDTO {
     @FutureOrPresent
     @NotNull
@@ -25,4 +24,6 @@ public class CreateTimeSlotDTO {
     @FutureOrPresent
     @NotNull
     private LocalDateTime endDateAndTime;
+    @NotNull
+    private Long tennisCourt;
 }
