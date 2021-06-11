@@ -47,21 +47,16 @@ public class TennisCourtServiceImpl implements TennisCourtService {
 
     @Override
     public TennisCourtDTO getTennisCourtById(Long id) {
-        try {
-            return tennisCourtMapper.map(courtRepository.findById(id).get());
-        } catch (Exception e) {
-            throw new TennisException(HttpStatus.NOT_FOUND, "GET METHOD: Tennis Court with that id does not exist!");
-        }
-
+        return tennisCourtMapper.map(courtRepository.getById(id));
     }
 
     @Override
     public TennisCourtDTO getTennisCourtByName(String name) {
-        try {
-            return tennisCourtMapper.map(courtRepository.getTennisCourtByName(name));
-        } catch (Exception e) {
+        TennisCourt tennisCourt = courtRepository.getTennisCourtByName(name);
+        if(tennisCourt != null) {
+            return tennisCourtMapper.map(tennisCourt);
+        } else
             throw new TennisException(HttpStatus.NOT_FOUND, "GET METHOD: Tennis Court with that name does not exist!");
-        }
     }
 
     @Override
