@@ -26,5 +26,10 @@
                  relativeToChangelogFile="true" />
     </changeSet>
 
+    <changeSet id="Add paid column in reservation" author="Dunja">
+        <sqlFile path="scripts/paidReservation.sql"
+                 relativeToChangelogFile="true" />
+    </changeSet>
+
 
 </databaseChangeLog>
