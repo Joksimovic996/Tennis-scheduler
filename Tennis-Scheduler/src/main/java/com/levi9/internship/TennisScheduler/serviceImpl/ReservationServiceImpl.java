@@ -56,13 +56,11 @@ public class ReservationServiceImpl implements ReservationService {
         List<Reservation> tempReservations = new ArrayList<>();
         List<ReservationDTO> reservations = new ArrayList<>();
         tempReservations = reservationRepository.findAll();
-        if (!tempReservations.isEmpty()) {
-            for (Reservation temp : tempReservations) {
-                reservations.add(reservationMapper.map(temp));
-            }
-            return reservations;
+        for (Reservation temp : tempReservations) {
+            reservations.add(reservationMapper.map(temp));
         }
-        return null;
+        return reservations;
+
     }
 
     @Override
@@ -72,40 +70,30 @@ public class ReservationServiceImpl implements ReservationService {
         newReservation = createReservationMapper.map(reservation);
         List<TimeSlot> slotsToBeSaved = new ArrayList<>();
         List<TimeSlot> slotsInBase = new ArrayList<>();
-        Double price = 0.0;
+        double price = 0.0;
         TennisPlayer tennisPlayer = tennisPlayerRepository.getById(tennisPlayerId);
-        Boolean doNotReserve = false;
 
-        List<TimeSlot> alreadyReserved = new ArrayList<>();
+        List<TimeSlot> alreadyHasTimeSlotsOnThatDay = new ArrayList<>();
 
         for(CreateTimeSlotDTO timeSlotDTO : reservation.getTimeSlots()) {
 
+            LocalDate startDate = timeSlotDTO.getStartDateAndTime().toLocalDate();
+            LocalDateTime startDateMidnight = LocalDateTime.of(startDate, LocalTime.MIDNIGHT);
+            LocalDateTime dayAfterMidnight = startDateMidnight.plusDays(1).toLocalDate().atStartOfDay();
+
+            alreadyHasTimeSlotsOnThatDay = timeSlotRepository.getTimeSlotsOfTennisPlayerForGivenDate(tennisPlayerId, startDateMidnight, dayAfterMidnight);
+            if(!alreadyHasTimeSlotsOnThatDay.isEmpty())
+                throw new TennisException(HttpStatus.BAD_REQUEST, "You cannot reserve two timeslots same day!");
+
 
             slotsInBase = timeSlotRepository.getTimeSlotOfSameDateAndCourt(timeSlotDTO.getStartDateAndTime(), timeSlotDTO.getEndDateAndTime(), timeSlotDTO.getTennisCourt());
-            LocalDate today = timeSlotDTO.getStartDateAndTime().toLocalDate();
-            LocalDateTime todayMidnight = (LocalDateTime) LocalDateTime.of(today, LocalTime.MIDNIGHT);
-            LocalDateTime tomorrow =(LocalDateTime)todayMidnight.plusDays(1).toLocalDate().atStartOfDay();
-
-            alreadyReserved = timeSlotRepository.getTimeSlotsOfTennisPlayerForGivenDate(tennisPlayerId, todayMidnight, tomorrow);
-            if(alreadyReserved.isEmpty()){
-                System.out.println("PRAZNO");
-            }else {
-                System.out.println("VEC REZERVISO!!!!!!!!!");
-                alreadyReserved.forEach((timeSlot -> {
-                    System.out.println(timeSlot.getStartDateAndTime());
-                }));
-                //doNotReserve = true;
-                throw new TennisException(HttpStatus.BAD_REQUEST, "Already Reserved!");
-            }
-
             if (slotsInBase.isEmpty()){
                 TennisCourt tennisCourt = tennisCourtRepository.getById(timeSlotDTO.getTennisCourt());
                 TimeSlot timeSlot = setCurrentTimeSlot(timeSlotDTO, newReservation, tennisCourt);
                 slotsToBeSaved.add(timeSlot);
                 price += getPriceOfTimeSlot(timeSlot);
             } else {
-                System.out.println("POKLAPANJE: " + timeSlotDTO.getStartDateAndTime().toString() +" "+timeSlotDTO.getEndDateAndTime().toString());
-                throw new TennisException(HttpStatus.BAD_REQUEST, "Overlapping!");
+                throw new TennisException(HttpStatus.BAD_REQUEST, "You cannot have overlapping with timeslots!");
             }
 
 
@@ -124,14 +112,10 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Boolean updateReservation(CreateReservationDTO reservation, Long id) {
+    public void updateReservation(CreateReservationDTO reservation, Long id) {
         Reservation temp = reservationRepository.getById(id);
-        if ( temp != null )  {
-            reservationRepository.save(createReservationMapper.map(reservation));
-            return true;
-        }else {
-            return false;
-        }
+        reservationRepository.save(createReservationMapper.map(reservation));
+
     }
 
     @Override

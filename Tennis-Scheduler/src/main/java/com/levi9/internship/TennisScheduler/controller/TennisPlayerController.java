@@ -69,7 +69,8 @@ public class TennisPlayerController {
             notes = "Requires an instance of CreateTennisPlayerDTO and ID of the tennis player"
     )
     public ResponseEntity<?> updateTennisPlayer(@RequestBody CreateTennisPlayerDTO tennisPlayerDTO, @PathVariable Long id) {
-        return ResponseEntity.ok(playerService.updateTennisPlayer(tennisPlayerDTO, id));
+        playerService.updateTennisPlayer(tennisPlayerDTO, id);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

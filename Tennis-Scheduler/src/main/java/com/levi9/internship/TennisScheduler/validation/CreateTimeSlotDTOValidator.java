@@ -80,7 +80,6 @@ public class CreateTimeSlotDTOValidator implements ConstraintValidator<ValidCrea
             listOfDates.add(slot.getStartDateAndTime().toLocalDate());
         }
         Set<LocalDate> setOfDates = new HashSet<>(listOfDates);
-
         return setOfDates.size() < listOfDates.size();
         }
 
