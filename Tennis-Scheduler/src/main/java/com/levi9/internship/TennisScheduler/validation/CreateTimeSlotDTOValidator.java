@@ -1,12 +1,13 @@
 package com.levi9.internship.TennisScheduler.validation;
 
+import com.levi9.internship.TennisScheduler.exceptions.TennisException;
 import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.CreateTimeSlotDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
+import org.springframework.http.HttpStatus;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import javax.xml.bind.SchemaOutputResolver;
 import java.time.DayOfWeek;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,7 +18,6 @@ import java.util.Set;
 public class CreateTimeSlotDTOValidator implements ConstraintValidator<ValidCreateTimeSlotDTO, Set<CreateTimeSlotDTO>> {
 
 
-
     @Override
     public void initialize(ValidCreateTimeSlotDTO constraintAnnotation) {
 
@@ -25,32 +25,30 @@ public class CreateTimeSlotDTOValidator implements ConstraintValidator<ValidCrea
 
     @Override
     public boolean isValid(Set<CreateTimeSlotDTO> timeSlots, ConstraintValidatorContext context) {
+        context.disableDefaultConstraintViolation();
         if (timeSlots.isEmpty()) {
             customMessageForValidation(context, "List of Time Slots is empty!");
             return false;
         } else {
-            for (CreateTimeSlotDTO value : timeSlots ) {
-                context.disableDefaultConstraintViolation();
-                DayOfWeek dayOfWeek = value.getStartDateAndTime().getDayOfWeek();
-                int startHourOfDay = value.getStartDateAndTime().getHour();
-                int startMinuteOfHour = value.getStartDateAndTime().getMinute();
-                int endHourOfDay = value.getEndDateAndTime().getHour();
-                int endMinuteOfHour = value.getEndDateAndTime().getMinute();
-                int minutesToPlay = (endHourOfDay * 60 + endMinuteOfHour) - (startHourOfDay * 60 + startMinuteOfHour);
-
-                if (value.getStartDateAndTime().isBefore(value.getEndDateAndTime())) {
-                    if (minutesToPlay >= 30 && minutesToPlay <= 120) {
-                        if ((dayOfWeek != DayOfWeek.SATURDAY) && (dayOfWeek != DayOfWeek.SUNDAY)) {
-                            if ((startHourOfDay >= 18) && (endHourOfDay <= 23)) {
-                                return true;
-                            } else {
+            List<CreateTimeSlotDTO> slots = new ArrayList<>(timeSlots);
+            if(isOverlapping(slots)){
+                customMessageForValidation(context, "Time slots cannot overlap with another!");
+                return false;
+            }
+            for (CreateTimeSlotDTO timeSlot : timeSlots) {
+                if (timeSlot.getStartDateAndTime() == null)
+                    throw new TennisException(HttpStatus.BAD_REQUEST, "Start date and time cannot be null!");
+                if (timeSlot.getEndDateAndTime() == null)
+                    throw new TennisException(HttpStatus.BAD_REQUEST, "End date and time cannot be null!");
+                if (isStartBeforeEndDate(timeSlot)) {
+                    if (isDurationOfTimeSlotValid(timeSlot)) {
+                        if (isWorkingDay(timeSlot)) {
+                            if (!isWorkTimeValid(timeSlot, 18,23 )) {
                                 customMessageForValidation(context, "On working days, you can register the slot from 18h to 23h!");
                                 return false;
                             }
                         } else {
-                            if ((startHourOfDay >= 17) && (endHourOfDay <= 22)) {
-                                return true;
-                            } else {
+                            if (!isWorkTimeValid(timeSlot, 17, 22)) {
                                 customMessageForValidation(context, "Working time on weekends is from 17h to 22h!");
                                 return false;
                             }
@@ -60,15 +58,47 @@ public class CreateTimeSlotDTOValidator implements ConstraintValidator<ValidCrea
                         return false;
                     }
                 } else {
-                    customMessageForValidation(context, "You cannot reserve a time slot in the past. Only for the current date and days in the future!");
+                    customMessageForValidation(context, "Start of the time slot must be before end of the time slot!");
                     return false;
                 }
             }
+            return true;
         }
-        return false;
     }
 
     private void customMessageForValidation(ConstraintValidatorContext context, String message) {
         context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
     }
+
+    private Boolean isOverlapping(List<CreateTimeSlotDTO> slots) {
+        List<LocalDate> listOfDates = new ArrayList<>();
+        for(CreateTimeSlotDTO slot : slots) {
+            if (slot.getStartDateAndTime() == null)
+                throw new TennisException(HttpStatus.BAD_REQUEST, "Start date and time cannot be null!");
+            if (slot.getEndDateAndTime() == null)
+                throw new TennisException(HttpStatus.BAD_REQUEST, "End date and time cannot be null!");
+            listOfDates.add(slot.getStartDateAndTime().toLocalDate());
+        }
+        Set<LocalDate> setOfDates = new HashSet<>(listOfDates);
+
+        return setOfDates.size() < listOfDates.size();
+        }
+
+    private Boolean isStartBeforeEndDate(CreateTimeSlotDTO timeSlot) {
+        return timeSlot.getStartDateAndTime().isBefore(timeSlot.getEndDateAndTime());
+    }
+
+    private Boolean isDurationOfTimeSlotValid(CreateTimeSlotDTO timeSlot) {
+        int minutesToPlay = (timeSlot.getEndDateAndTime().getHour() * 60 + timeSlot.getEndDateAndTime().getMinute()) - (timeSlot.getStartDateAndTime().getHour() * 60 + timeSlot.getStartDateAndTime().getMinute());
+        return minutesToPlay >= 30 && minutesToPlay <= 120;
+    }
+
+    private Boolean isWorkingDay(CreateTimeSlotDTO timeSlot) {
+        return (timeSlot.getStartDateAndTime().getDayOfWeek() != DayOfWeek.SATURDAY) && (timeSlot.getStartDateAndTime().getDayOfWeek() != DayOfWeek.SUNDAY);
+    }
+
+    private Boolean isWorkTimeValid(CreateTimeSlotDTO timeSlot, int start, int end) {
+        return timeSlot.getStartDateAndTime().getHour() >= start && timeSlot.getEndDateAndTime().getHour() <= end;
+    }
+
 }

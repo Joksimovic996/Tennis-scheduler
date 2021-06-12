@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -93,7 +94,7 @@ public class TennisCourtController {
                     value = "Instance of CreateTennisCourtDTO",
                     required = true
             )
-            @RequestBody CreateTennisCourtDTO tennisCourtDTO) {
+            @Valid @RequestBody CreateTennisCourtDTO tennisCourtDTO) {
         courtService.addTennisCourt(tennisCourtDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

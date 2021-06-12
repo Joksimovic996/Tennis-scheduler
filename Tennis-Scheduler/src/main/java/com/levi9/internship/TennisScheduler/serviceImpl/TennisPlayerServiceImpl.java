@@ -35,13 +35,7 @@ public class TennisPlayerServiceImpl implements TennisPlayerService {
 
     @Override
     public TennisPlayerDTO getTennisPlayer(Long id) {
-
-        TennisPlayer tennisPlayer=tennisPlayerRepository.getById(id);
-        if(tennisPlayer!=null)
-        {
-            return tennisPlayerMapper.map(tennisPlayer);
-        }
-        return null;
+        return tennisPlayerMapper.map(tennisPlayerRepository.getById(id));
     }
 
     @Override

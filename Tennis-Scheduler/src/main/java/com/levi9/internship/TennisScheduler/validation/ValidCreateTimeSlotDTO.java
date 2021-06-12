@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidCreateTimeSlotDTO {
 
-    String message() default "default";
+    String message() default "Difoltna poruka";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

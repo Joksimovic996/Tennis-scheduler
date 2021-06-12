@@ -22,4 +22,7 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, Long> {
     @Query("select s from TimeSlot s where (s.startDateAndTime between :startDate and :endDate and s.tennisCourt.id = :courtId)")
     public List<TimeSlot> getTimeSlotOfSameDateAndCourt(LocalDateTime startDate, LocalDateTime endDate, Long courtId);
 
+    @Query("select s from TimeSlot s inner join TennisPlayer tp on (s.reservation.tennisPlayer.id = tp.id) where (s.startDateAndTime between :startDate and :endDate and tp.id = :playerId) ")
+    public List<TimeSlot> getTimeSlotsOfTennisPlayerForGivenDate(Long playerId, LocalDateTime startDate, LocalDateTime endDate );
+
 }

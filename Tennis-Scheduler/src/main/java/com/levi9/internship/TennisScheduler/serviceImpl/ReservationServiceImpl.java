@@ -1,5 +1,6 @@
 package com.levi9.internship.TennisScheduler.serviceImpl;
 
+import com.levi9.internship.TennisScheduler.exceptions.TennisException;
 import com.levi9.internship.TennisScheduler.mapper.reservation.CreateReservationMapper;
 import com.levi9.internship.TennisScheduler.mapper.reservation.ReservationMapper;
 import com.levi9.internship.TennisScheduler.mapper.timeSlot.CreateTimeSlotMapper;
@@ -15,9 +16,12 @@ import com.levi9.internship.TennisScheduler.repository.TennisCourtRepository;
 import com.levi9.internship.TennisScheduler.repository.TennisPlayerRepository;
 import com.levi9.internship.TennisScheduler.repository.TimeSlotRepository;
 import com.levi9.internship.TennisScheduler.service.ReservationService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +48,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public ReservationDTO getReservation(Long id) {
-        Reservation reservation = reservationRepository.getById(id);
-
-        if (reservation != null) { return reservationMapper.map(reservation); }
-
-        return null;
+        return reservationMapper.map(reservationRepository.getById(id));
     }
 
     @Override
@@ -67,48 +67,58 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public void addReservation(CreateReservationDTO reservation, Long tennisPlayerId) {
-        Reservation newReservation = new Reservation();
-        TennisPlayer tennisPlayer = tennisPlayerRepository.getById(tennisPlayerId);
-        List<TimeSlot> tempSlots = new ArrayList<>();
-        Double price = 0.0;
-        newReservation = createReservationMapper.map(reservation);
 
+        Reservation newReservation = new Reservation();
+        newReservation = createReservationMapper.map(reservation);
+        List<TimeSlot> slotsToBeSaved = new ArrayList<>();
         List<TimeSlot> slotsInBase = new ArrayList<>();
+        Double price = 0.0;
+        TennisPlayer tennisPlayer = tennisPlayerRepository.getById(tennisPlayerId);
         Boolean doNotReserve = false;
+
+        List<TimeSlot> alreadyReserved = new ArrayList<>();
+
         for(CreateTimeSlotDTO timeSlotDTO : reservation.getTimeSlots()) {
 
+
             slotsInBase = timeSlotRepository.getTimeSlotOfSameDateAndCourt(timeSlotDTO.getStartDateAndTime(), timeSlotDTO.getEndDateAndTime(), timeSlotDTO.getTennisCourt());
+            LocalDate today = timeSlotDTO.getStartDateAndTime().toLocalDate();
+            LocalDateTime todayMidnight = (LocalDateTime) LocalDateTime.of(today, LocalTime.MIDNIGHT);
+            LocalDateTime tomorrow =(LocalDateTime)todayMidnight.plusDays(1).toLocalDate().atStartOfDay();
+
+            alreadyReserved = timeSlotRepository.getTimeSlotsOfTennisPlayerForGivenDate(tennisPlayerId, todayMidnight, tomorrow);
+            if(alreadyReserved.isEmpty()){
+                System.out.println("PRAZNO");
+            }else {
+                System.out.println("VEC REZERVISO!!!!!!!!!");
+                alreadyReserved.forEach((timeSlot -> {
+                    System.out.println(timeSlot.getStartDateAndTime());
+                }));
+                //doNotReserve = true;
+                throw new TennisException(HttpStatus.BAD_REQUEST, "Already Reserved!");
+            }
 
             if (slotsInBase.isEmpty()){
-                TimeSlot temp = timeSlotMapper.map(timeSlotDTO);
-                temp.setReservation(newReservation);
                 TennisCourt tennisCourt = tennisCourtRepository.getById(timeSlotDTO.getTennisCourt());
-                temp.setTennisCourt(tennisCourt);
-                tempSlots.add(temp);
-                int minutesToPlay = (temp.getEndDateAndTime().getHour() * 60 + temp.getEndDateAndTime().getMinute()) - (temp.getStartDateAndTime().getHour() * 60 + temp.getStartDateAndTime().getMinute());
-                price += minutesToPlay * temp.getTennisCourt().getPricePerMinute();
+                TimeSlot timeSlot = setCurrentTimeSlot(timeSlotDTO, newReservation, tennisCourt);
+                slotsToBeSaved.add(timeSlot);
+                price += getPriceOfTimeSlot(timeSlot);
             } else {
-                doNotReserve = true;
                 System.out.println("POKLAPANJE: " + timeSlotDTO.getStartDateAndTime().toString() +" "+timeSlotDTO.getEndDateAndTime().toString());
+                throw new TennisException(HttpStatus.BAD_REQUEST, "Overlapping!");
             }
 
 
         }
-
-        if(tempSlots.size() >= 5 ){
-            price += 10;
-        }
+        //additional fee for more than five slots
+        price = slotsToBeSaved.size() > 5 ? price + 10 : price;
 
         newReservation.setReservationDate(LocalDateTime.now());
         newReservation.setPrice(price);
         newReservation.setTennisPlayer(tennisPlayer);
 
-        if(!doNotReserve) {
-            reservationRepository.save(newReservation);
-        }else {
-            System.out.println("NE ME ZE!");
-        }
-        for(TimeSlot temp : tempSlots) {
+        reservationRepository.save(newReservation);
+        for(TimeSlot temp : slotsToBeSaved) {
             timeSlotRepository.save(temp);
         }
     }
@@ -127,5 +137,18 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public void deleteReservationById(Long id) {
         reservationRepository.deleteById(id);
+    }
+
+    private Double getPriceOfTimeSlot(TimeSlot timeSlot) {
+        return ((timeSlot.getEndDateAndTime().getHour() * 60 + timeSlot.getEndDateAndTime().getMinute())
+                - (timeSlot.getStartDateAndTime().getHour() * 60 + timeSlot.getStartDateAndTime().getMinute())) *
+                timeSlot.getTennisCourt().getPricePerMinute();
+    }
+
+    private TimeSlot setCurrentTimeSlot(CreateTimeSlotDTO createTimeSlotDTO, Reservation newReservation, TennisCourt tennisCourt) {
+        TimeSlot timeSlot = timeSlotMapper.map(createTimeSlotDTO);
+        timeSlot.setReservation(newReservation);
+        timeSlot.setTennisCourt(tennisCourt);
+        return timeSlot;
     }
 }

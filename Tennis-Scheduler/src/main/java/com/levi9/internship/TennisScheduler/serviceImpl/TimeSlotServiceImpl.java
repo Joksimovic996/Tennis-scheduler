@@ -35,12 +35,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
     @Override
     public TimeSlotDTO getTimeSlot(Long id) {
-        try {
-            return timeSlotMapper.map(timeSlotRepository.getById(id));
-        } catch (Exception e) {
-            throw new TennisException(HttpStatus.NOT_FOUND, "GET METHOD: Time slot with that ID does not exist!");
-        }
-
+        return timeSlotMapper.map(timeSlotRepository.getById(id));
     }
 
     @Override
