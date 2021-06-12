@@ -17,7 +17,7 @@ public interface TennisPlayerService {
 
     public void addTennisPlayer(CreateTennisPlayerDTO tennisCourtDTO);
 
-    public Boolean updateTennisPlayer(CreateTennisPlayerDTO tennisPlayerDTO, Long id);
+    public void updateTennisPlayer(CreateTennisPlayerDTO tennisPlayerDTO, Long id);
 
     public void deleteTennisPlayer(Long id);
 

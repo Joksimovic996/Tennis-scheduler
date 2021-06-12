@@ -59,14 +59,14 @@ public class TennisPlayerServiceImpl implements TennisPlayerService {
     }
 
     @Override
-    public Boolean updateTennisPlayer(CreateTennisPlayerDTO tennisPlayerDTO, Long id) {
-        TennisPlayer temp = tennisPlayerRepository.getById(id);
-        if ( temp != null )  {
-            tennisPlayerRepository.save(createTennisPlayerMapper.map(tennisPlayerDTO));
-            return true;
-        }else {
-            return false;
+    public void updateTennisPlayer(CreateTennisPlayerDTO tennisPlayerDTO, Long id) {
+        TennisPlayer tennisPlayer = tennisPlayerRepository.getTennisPlayerByEmail(tennisPlayerDTO.getEmail());
+        if(tennisPlayer != null) {
+            throw new TennisException(HttpStatus.BAD_REQUEST,"Tennis Player with that email already exist!");
         }
+        TennisPlayer updatedTennisPlayer = createTennisPlayerMapper.map(tennisPlayerDTO);
+        updatedTennisPlayer.setId(id);
+        tennisPlayerRepository.save(updatedTennisPlayer);
     }
 
     @Override
@@ -76,10 +76,9 @@ public class TennisPlayerServiceImpl implements TennisPlayerService {
 
     @Override
     public TennisPlayerDTO getTennisPlayerByEmail(String email) {
-        try {
-            return tennisPlayerMapper.map(tennisPlayerRepository.getTennisPlayerByEmail(email));
-        } catch (Exception e) {
-            throw new TennisException(HttpStatus.NOT_FOUND, "GET METHOD: Tennis Court with that name does not exist!");
-        }
+        TennisPlayer tennisPlayer = tennisPlayerRepository.getTennisPlayerByEmail(email);
+        if (tennisPlayer == null)
+            throw new TennisException(HttpStatus.NOT_FOUND, "Tennis Player with that email does not exist!");
+        return tennisPlayerMapper.map(tennisPlayer);
     }
 }

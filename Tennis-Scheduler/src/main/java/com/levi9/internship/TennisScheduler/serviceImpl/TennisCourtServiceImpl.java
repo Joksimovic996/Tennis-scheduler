@@ -6,7 +6,6 @@ import com.levi9.internship.TennisScheduler.mapper.tennisCourt.TennisCourtMapper
 import com.levi9.internship.TennisScheduler.mapper.tennisCourt.UpdateTennisCourtMapper;
 import com.levi9.internship.TennisScheduler.mapper.timeSlot.TimeSlotMapper;
 import com.levi9.internship.TennisScheduler.model.TennisCourt;
-import com.levi9.internship.TennisScheduler.model.TimeSlot;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.CreateTennisCourtDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.UpdateTennisCourtDTO;
@@ -53,10 +52,9 @@ public class TennisCourtServiceImpl implements TennisCourtService {
     @Override
     public TennisCourtDTO getTennisCourtByName(String name) {
         TennisCourt tennisCourt = courtRepository.getTennisCourtByName(name);
-        if(tennisCourt != null) {
-            return tennisCourtMapper.map(tennisCourt);
-        } else
-            throw new TennisException(HttpStatus.NOT_FOUND, "GET METHOD: Tennis Court with that name does not exist!");
+        if(tennisCourt == null)
+            throw new TennisException(HttpStatus.NOT_FOUND, "Tennis Court with that name does not exist!");
+        return tennisCourtMapper.map(tennisCourt);
     }
 
     @Override
@@ -70,15 +68,12 @@ public class TennisCourtServiceImpl implements TennisCourtService {
 
     @Override
     public void updateTennisCourt(UpdateTennisCourtDTO tennisCourtDTO, Long id) {
-        try {
-            TennisCourt temp = courtRepository.getById(id);
-            TennisCourt updated = updateTennisCourtMapper.map(tennisCourtDTO);
-            updated.setId(temp.getId());
-            updated.setName(temp.getName());
-            courtRepository.save(updated);
-        } catch (Exception e) {
-            throw new TennisException(HttpStatus.NOT_FOUND, "UPDATE METHOD: Tennis Court with that id does not exist!");
-        }
+        TennisCourt temp = courtRepository.getById(id);
+        TennisCourt updated = updateTennisCourtMapper.map(tennisCourtDTO);
+        updated.setId(temp.getId());
+        updated.setName(temp.getName());
+        courtRepository.save(updated);
+
     }
 
     @Override

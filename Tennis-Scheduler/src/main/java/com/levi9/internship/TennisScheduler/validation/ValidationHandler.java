@@ -47,4 +47,8 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>("Entity with that ID does not exist!", HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleException(IllegalArgumentException illegalArgumentException) {
+        return new ResponseEntity<>("Some of the input parameters are null!", HttpStatus.NOT_ACCEPTABLE);
+    }
 }
