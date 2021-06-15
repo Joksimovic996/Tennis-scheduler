@@ -11,4 +11,6 @@ public interface TennisPlayerRepository extends JpaRepository<TennisPlayer,Long>
 
     @Query("select tp from TennisPlayer tp where (lower(tp.email)  = lower(:email))")
     public TennisPlayer getTennisPlayerByEmail(@Param("email") String email);
+
+    TennisPlayer findByUsername(String username);
 }
