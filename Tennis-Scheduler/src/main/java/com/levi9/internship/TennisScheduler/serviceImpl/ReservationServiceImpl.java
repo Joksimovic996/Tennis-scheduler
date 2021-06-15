@@ -1,13 +1,14 @@
 package com.levi9.internship.TennisScheduler.serviceImpl;
 
+import com.levi9.internship.TennisScheduler.enumerations.PaymentType;
 import com.levi9.internship.TennisScheduler.exceptions.TennisException;
 import com.levi9.internship.TennisScheduler.mapper.reservation.CreateReservationMapper;
 import com.levi9.internship.TennisScheduler.mapper.reservation.ReservationMapper;
 import com.levi9.internship.TennisScheduler.mapper.timeSlot.CreateTimeSlotMapper;
 import com.levi9.internship.TennisScheduler.model.Reservation;
 import com.levi9.internship.TennisScheduler.model.TennisCourt;
-import com.levi9.internship.TennisScheduler.model.TennisPlayer;
 import com.levi9.internship.TennisScheduler.model.TimeSlot;
+import com.levi9.internship.TennisScheduler.modelDTO.creditCardDTO.CreditCardDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.reservation.CreateReservationDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.reservation.ReservationDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.CreateTimeSlotDTO;
@@ -19,7 +20,6 @@ import com.levi9.internship.TennisScheduler.service.ReservationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -53,9 +53,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<ReservationDTO> getAllReservations() {
-        List<Reservation> tempReservations = new ArrayList<>();
+        List<Reservation> tempReservations = reservationRepository.findAll();
         List<ReservationDTO> reservations = new ArrayList<>();
-        tempReservations = reservationRepository.findAll();
         for (Reservation temp : tempReservations) {
             reservations.add(reservationMapper.map(temp));
         }
@@ -64,22 +63,29 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public void addReservation(CreateReservationDTO reservation, Long tennisPlayerId) {
+    public void addReservation(CreateReservationDTO reservation, Long tennisPlayerId, CreditCardDTO creditCardDTO) {
+        var newReservation = createReservationMapper.map(reservation);
 
-        Reservation newReservation = new Reservation();
-        newReservation = createReservationMapper.map(reservation);
+        if (reservation.getPaymentType().equalsIgnoreCase(PaymentType.PAY_WITH_CREDIT_CARD.name())) {
+            if (creditCardDTO.getCreditCardNumber() == null || creditCardDTO.getCreditCardValidDate() == null || creditCardDTO.getCreditCardCvcCode() == 0)
+                throw new TennisException(HttpStatus.BAD_REQUEST, "Please enter credit card information!");
+            else
+                newReservation.setPaid(true);
+                // call payment service
+        }
+
         List<TimeSlot> slotsToBeSaved = new ArrayList<>();
-        List<TimeSlot> slotsInBase = new ArrayList<>();
-        double price = 0.0;
-        TennisPlayer tennisPlayer = tennisPlayerRepository.getById(tennisPlayerId);
+        List<TimeSlot> slotsInBase;
+        var price = 0.0;
+        var tennisPlayer = tennisPlayerRepository.getById(tennisPlayerId);
 
-        List<TimeSlot> alreadyHasTimeSlotsOnThatDay = new ArrayList<>();
+        List<TimeSlot> alreadyHasTimeSlotsOnThatDay;
 
         for(CreateTimeSlotDTO timeSlotDTO : reservation.getTimeSlots()) {
 
-            LocalDate startDate = timeSlotDTO.getStartDateAndTime().toLocalDate();
-            LocalDateTime startDateMidnight = LocalDateTime.of(startDate, LocalTime.MIDNIGHT);
-            LocalDateTime dayAfterMidnight = startDateMidnight.plusDays(1).toLocalDate().atStartOfDay();
+            var startDate = timeSlotDTO.getStartDateAndTime().toLocalDate();
+            var startDateMidnight = LocalDateTime.of(startDate, LocalTime.MIDNIGHT);
+            var dayAfterMidnight = startDateMidnight.plusDays(1).toLocalDate().atStartOfDay();
 
             alreadyHasTimeSlotsOnThatDay = timeSlotRepository.getTimeSlotsOfTennisPlayerForGivenDate(tennisPlayerId, startDateMidnight, dayAfterMidnight);
             if(!alreadyHasTimeSlotsOnThatDay.isEmpty())
@@ -88,8 +94,8 @@ public class ReservationServiceImpl implements ReservationService {
 
             slotsInBase = timeSlotRepository.getTimeSlotOfSameDateAndCourt(timeSlotDTO.getStartDateAndTime(), timeSlotDTO.getEndDateAndTime(), timeSlotDTO.getTennisCourt());
             if (slotsInBase.isEmpty()){
-                TennisCourt tennisCourt = tennisCourtRepository.getById(timeSlotDTO.getTennisCourt());
-                TimeSlot timeSlot = setCurrentTimeSlot(timeSlotDTO, newReservation, tennisCourt);
+                var tennisCourt = tennisCourtRepository.getById(timeSlotDTO.getTennisCourt());
+                var timeSlot = setCurrentTimeSlot(timeSlotDTO, newReservation, tennisCourt);
                 slotsToBeSaved.add(timeSlot);
                 price += getPriceOfTimeSlot(timeSlot);
             } else {
@@ -112,9 +118,13 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public void updateReservation(CreateReservationDTO reservation, Long id) {
-        Reservation temp = reservationRepository.getById(id);
-        reservationRepository.save(createReservationMapper.map(reservation));
+    public void updateReservation(Boolean paid, Long id) {
+        var reservation = reservationRepository.getById(id);
+        if (reservation.getPaymentType().equals(PaymentType.PAY_WITH_CASH)) {
+            reservation.setPaid(paid);
+            reservationRepository.save(reservation);
+        } else
+            throw new TennisException(HttpStatus.BAD_REQUEST, "You cannot change paid value if payment type is 'pay with credit card'!");
 
     }
 
@@ -130,7 +140,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     private TimeSlot setCurrentTimeSlot(CreateTimeSlotDTO createTimeSlotDTO, Reservation newReservation, TennisCourt tennisCourt) {
-        TimeSlot timeSlot = timeSlotMapper.map(createTimeSlotDTO);
+        var timeSlot = timeSlotMapper.map(createTimeSlotDTO);
         timeSlot.setReservation(newReservation);
         timeSlot.setTennisCourt(tennisCourt);
         return timeSlot;
