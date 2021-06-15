@@ -41,5 +41,14 @@
                  relativeToChangelogFile="true" />
     </changeSet>
 
+    <changeSet id="Add new values in authority table" author="Dunja">
+        <sqlFile path="scripts/insertAuthority.sql"
+                 relativeToChangelogFile="true" />
+    </changeSet>
+    <changeSet id="Add new player_authority table" author="Dunja">
+        <sqlFile path="scripts/createPlayerAuthorityTable.sql"
+                 relativeToChangelogFile="true" />
+    </changeSet>
+
 
 </databaseChangeLog>
