@@ -1,5 +1,6 @@
 package com.levi9.internship.TennisScheduler.controller;
 
+import com.levi9.internship.TennisScheduler.modelDTO.creditCardDTO.CreditCardDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.reservation.CreateReservationDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.reservation.ReservationDTO;
 import com.levi9.internship.TennisScheduler.serviceImpl.ReservationServiceImpl;
@@ -63,8 +64,9 @@ public class ReservationController {
                     value = "CreateReservationDTO",
                     required = true
             )
-            @Valid @RequestBody CreateReservationDTO reservation){
-        reservationService.addReservation(reservation, tennisPlayerId);
+            @Valid @RequestBody CreateReservationDTO reservation,
+            CreditCardDTO creditCardDTO){
+        reservationService.addReservation(reservation, tennisPlayerId, creditCardDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
 
 
@@ -77,15 +79,15 @@ public class ReservationController {
     )
     public ResponseEntity<?> updateReservation(
             @ApiParam(
-                    value = "CreateReservationDTO",
+                    value = "Boolean",
                     required = true
-            )@RequestBody CreateReservationDTO reservation,
+            )@RequestParam Boolean paid,
             @ApiParam(
-                    value = "ID value for the the tennis player who reserved it",
+                    value = "ID value of reservation",
                     required = true
             )
             @PathVariable Long id){
-        reservationService.updateReservation(reservation, id);
+        reservationService.updateReservation(paid, id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

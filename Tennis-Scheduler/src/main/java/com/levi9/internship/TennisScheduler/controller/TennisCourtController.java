@@ -3,6 +3,7 @@ package com.levi9.internship.TennisScheduler.controller;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.CreateTennisCourtDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.UpdateTennisCourtDTO;
+import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
 import com.levi9.internship.TennisScheduler.serviceImpl.TennisCourtServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +33,7 @@ public class TennisCourtController {
             notes = "Provide an ID to look up specific tennis court",
             response = TennisCourtDTO.class
     )
-    public ResponseEntity<?> getTennisCourtById(
+    public ResponseEntity<TennisCourtDTO> getTennisCourtById(
             @ApiParam(
                     value = "ID value for the court you need to retrieve",
                     required = true
@@ -49,7 +50,7 @@ public class TennisCourtController {
             notes = "Provide name of court to look up specific tennis court",
             response = TennisCourtDTO.class
     )
-    public ResponseEntity<?> getTennisCourtByName(
+    public ResponseEntity<TennisCourtDTO> getTennisCourtByName(
             @ApiParam(
                     value = "Name value for the court you need to retrieve",
                     required = true
@@ -64,7 +65,7 @@ public class TennisCourtController {
             value = "Finds a List of Time Slots of Tennis Court",
             response = List.class
     )
-    public ResponseEntity<?> getTimeSlotsOfTennisCourt(
+    public ResponseEntity<List<TimeSlotDTO>> getTimeSlotsOfTennisCourt(
             @ApiParam(
                     value = "ID of Tennis Court",
                     required = true
@@ -79,7 +80,7 @@ public class TennisCourtController {
             value = "Finds a List Of All Tennis Courts In The System",
             response = List.class
     )
-    public ResponseEntity<?> getTennisCourts() {
+    public ResponseEntity<List<TennisCourtDTO>> getTennisCourts() {
         return ResponseEntity.ok(courtService.getAllCourts());
     }
 
@@ -89,7 +90,7 @@ public class TennisCourtController {
             value = "Adds a New Tennis Court",
             notes = "Requires an instance of CreateTennisCourtDTO"
     )
-    public ResponseEntity<?> addTennisCourt(
+    public ResponseEntity<TennisCourtDTO> addTennisCourt(
             @ApiParam(
                     value = "Instance of CreateTennisCourtDTO",
                     required = true
@@ -105,7 +106,7 @@ public class TennisCourtController {
             value = "Updates The Existing Tennis Court",
             notes = "Requires an instance of CreateTennisCourtDTO and ID of the tennis court"
     )
-    public ResponseEntity<?> updateTennisCourt(@RequestBody UpdateTennisCourtDTO tennisCourtDTO, @PathVariable Long id) {
+    public ResponseEntity<TennisCourtDTO> updateTennisCourt(@RequestBody UpdateTennisCourtDTO tennisCourtDTO, @PathVariable Long id) {
         courtService.updateTennisCourt(tennisCourtDTO, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -116,7 +117,7 @@ public class TennisCourtController {
             value = "Deletes The Existing Tennis Court",
             notes = "Requires an ID of the tennis court"
     )
-    public ResponseEntity<?> deleteTennisCourt(
+    public ResponseEntity<TennisCourtDTO> deleteTennisCourt(
             @ApiParam(
                     value = "ID of the Tennis Court",
                     required = true

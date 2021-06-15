@@ -20,17 +20,11 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
     private final TimeSlotRepository timeSlotRepository;
     private final TimeSlotMapper timeSlotMapper;
-    private final CreateTimeSlotMapper createTimeSlotMapper;
-    private final TennisCourtRepository tennisCourtRepository;
-    private final ReservationRepository reservationRepository;
 
 
-    public TimeSlotServiceImpl(TimeSlotRepository timeSlotRepository, TimeSlotMapper timeSlotMapper, CreateTimeSlotMapper createTimeSlotMapper, TennisCourtRepository tennisCourtRepository, ReservationRepository reservationRepository) {
+    public TimeSlotServiceImpl(TimeSlotRepository timeSlotRepository, TimeSlotMapper timeSlotMapper) {
         this.timeSlotRepository = timeSlotRepository;
         this.timeSlotMapper = timeSlotMapper;
-        this.createTimeSlotMapper = createTimeSlotMapper;
-        this.tennisCourtRepository = tennisCourtRepository;
-        this.reservationRepository = reservationRepository;
     }
 
     @Override

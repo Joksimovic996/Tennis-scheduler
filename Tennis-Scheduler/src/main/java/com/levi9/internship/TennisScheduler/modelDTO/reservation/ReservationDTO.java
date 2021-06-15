@@ -24,4 +24,6 @@ public class ReservationDTO {
     private String paymentType;
     @ApiModelProperty(notes = "The price that tennis player needs to pay for reservation")
     private Double price;
+    @ApiModelProperty(notes = "Indication of payment status")
+    private Boolean paid;
 }

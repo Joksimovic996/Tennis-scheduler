@@ -40,4 +40,7 @@ public class Reservation {
 
     @Column(name = "price")
     private Double price;
+
+    @Column(name = "paid")
+    private Boolean paid;
 }
