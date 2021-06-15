@@ -4,7 +4,6 @@ package com.levi9.internship.TennisScheduler.serviceImpl;
 import com.levi9.internship.TennisScheduler.exceptions.TennisException;
 import com.levi9.internship.TennisScheduler.mapper.tennisPlayer.CreateTennisPlayerMapper;
 import com.levi9.internship.TennisScheduler.mapper.tennisPlayer.TennisPlayerMapper;
-import com.levi9.internship.TennisScheduler.model.TennisCourt;
 import com.levi9.internship.TennisScheduler.model.TennisPlayer;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.CreateTennisPlayerDTO;
 import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.TennisPlayerDTO;
