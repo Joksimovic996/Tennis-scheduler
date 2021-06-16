@@ -41,12 +41,12 @@ public class TennisPlayerServiceImpl implements TennisPlayerService {
 
     @Override
     public TennisPlayerDTO getTennisPlayer(Long id) {
-        return tennisPlayerMapper.map(tennisPlayerRepository.getById(id));
+        return tennisPlayerMapper.map(tennisPlayerRepository.getTennisPlayerById(id));
     }
 
     @Override
     public List<TennisPlayerDTO> getAllPlayers() {
-        List<TennisPlayer> tennisPlayers=tennisPlayerRepository.findAll();
+        List<TennisPlayer> tennisPlayers=tennisPlayerRepository.getAllPlayers();
         List<TennisPlayerDTO> tennisPlayerDTOS=new ArrayList<>();
             if (!tennisPlayers.isEmpty()) {
                 for (TennisPlayer temp : tennisPlayers) {
@@ -79,7 +79,10 @@ public class TennisPlayerServiceImpl implements TennisPlayerService {
 
     @Override
     public void deleteTennisPlayer(Long id) {
-        tennisPlayerRepository.deleteById(id);
+
+        TennisPlayer tennisPlayer = tennisPlayerRepository.getTennisPlayerById(id);
+        tennisPlayer.setDeleted(true);
+        tennisPlayerRepository.save(tennisPlayer);
     }
 
     @Override
