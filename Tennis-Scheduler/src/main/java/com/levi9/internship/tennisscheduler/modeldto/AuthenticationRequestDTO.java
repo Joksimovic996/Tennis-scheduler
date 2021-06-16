@@ -1,4 +1,4 @@
-package com.levi9.internship.TennisScheduler.security.auth;
+package com.levi9.internship.tennisscheduler.modeldto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class JwtAuthenticationRequest {
+public class AuthenticationRequestDTO {
     private String username;
     private String password;
 }

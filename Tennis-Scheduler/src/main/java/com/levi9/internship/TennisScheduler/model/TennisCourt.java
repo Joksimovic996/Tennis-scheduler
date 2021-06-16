@@ -1,14 +1,11 @@
-package com.levi9.internship.TennisScheduler.model;
+package com.levi9.internship.tennisscheduler.model;
 
-import com.levi9.internship.TennisScheduler.enumerations.TennisCourtType;
+import com.levi9.internship.tennisscheduler.enumerations.TennisCourtType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static javax.persistence.GenerationType.*;
 

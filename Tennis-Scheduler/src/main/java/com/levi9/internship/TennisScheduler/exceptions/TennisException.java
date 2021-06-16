@@ -1,19 +1,18 @@
-package com.levi9.internship.TennisScheduler.exceptions;
+package com.levi9.internship.tennisscheduler.exceptions;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class TennisException extends RuntimeException {
 
-    private HttpStatus httpStatus;
-    private String message;
+    private final HttpStatus httpStatus;
+    private final String message;
 
-
+    public TennisException(HttpStatus httpStatus, String message) {
+        this.httpStatus = httpStatus;
+        this.message = message;
+    }
 }

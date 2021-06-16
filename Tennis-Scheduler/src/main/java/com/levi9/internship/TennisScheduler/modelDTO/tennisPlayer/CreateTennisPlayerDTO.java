@@ -1,14 +1,11 @@
-package com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer;
+package com.levi9.internship.tennisscheduler.modeldto.tennisplayer;
 
-import com.levi9.internship.TennisScheduler.modelDTO.reservation.ReservationDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter

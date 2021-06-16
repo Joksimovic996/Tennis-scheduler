@@ -1,7 +1,7 @@
-package com.levi9.internship.TennisScheduler.modelDTO.reservation;
+package com.levi9.internship.tennisscheduler.modeldto.reservation;
 
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.CreateTimeSlotDTO;
-import com.levi9.internship.TennisScheduler.validation.ValidCreateTimeSlotDTO;
+import com.levi9.internship.tennisscheduler.modeldto.timeslot.CreateTimeSlotDTO;
+import com.levi9.internship.tennisscheduler.validation.ValidCreateTimeSlotDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

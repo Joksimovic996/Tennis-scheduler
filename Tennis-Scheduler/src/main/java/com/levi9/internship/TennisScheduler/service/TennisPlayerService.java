@@ -1,25 +1,22 @@
-package com.levi9.internship.TennisScheduler.service;
+package com.levi9.internship.tennisscheduler.service;
 
-import com.levi9.internship.TennisScheduler.model.TennisPlayer;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.CreateTennisPlayerDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.TennisPlayerDTO;
-import com.levi9.internship.TennisScheduler.repository.TennisPlayerRepository;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.levi9.internship.tennisscheduler.modeldto.tennisplayer.CreateTennisPlayerDTO;
+import com.levi9.internship.tennisscheduler.modeldto.tennisplayer.TennisPlayerDTO;
 
 import java.util.List;
 
 public interface TennisPlayerService {
 
 
-    public TennisPlayerDTO getTennisPlayer(Long id);
+    TennisPlayerDTO getTennisPlayer(Long id);
 
-    public List<TennisPlayerDTO> getAllPlayers();
+    List<TennisPlayerDTO> getAllPlayers();
 
-    public void addTennisPlayer(CreateTennisPlayerDTO tennisCourtDTO);
+    TennisPlayerDTO addTennisPlayer(CreateTennisPlayerDTO tennisCourtDTO);
 
-    public void updateTennisPlayer(CreateTennisPlayerDTO tennisPlayerDTO, Long id);
+    void updateTennisPlayer(CreateTennisPlayerDTO tennisPlayerDTO, Long id);
 
-    public void deleteTennisPlayer(Long id);
+    void deleteTennisPlayer(Long id);
 
-    public TennisPlayerDTO getTennisPlayerByEmail(String email);
+    TennisPlayerDTO getTennisPlayerByEmail(String email);
 }

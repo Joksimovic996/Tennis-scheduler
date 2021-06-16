@@ -1,14 +1,10 @@
-package com.levi9.internship.TennisScheduler.repository;
+package com.levi9.internship.tennisscheduler.repository;
 
-import com.levi9.internship.TennisScheduler.model.TennisCourt;
-import com.levi9.internship.TennisScheduler.model.TimeSlot;
-import org.apache.tomcat.jni.Local;
+import com.levi9.internship.tennisscheduler.model.TimeSlot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,12 +13,12 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, Long> {
 
 
     @Query("select s from TimeSlot s where(s.reservation.id = :reservationId)")
-    public List<TimeSlot> getTimeSlotsOfReservation(Long reservationId);
+    List<TimeSlot> getTimeSlotsOfReservation(Long reservationId);
 
     @Query("select s from TimeSlot s where (s.startDateAndTime between :startDate and :endDate and s.tennisCourt.id = :courtId)")
-    public List<TimeSlot> getTimeSlotOfSameDateAndCourt(LocalDateTime startDate, LocalDateTime endDate, Long courtId);
+    List<TimeSlot> getTimeSlotOfSameDateAndCourt(LocalDateTime startDate, LocalDateTime endDate, Long courtId);
 
     @Query("select s from TimeSlot s inner join TennisPlayer tp on (s.reservation.tennisPlayer.id = tp.id) where (s.startDateAndTime between :startDate and :endDate and tp.id = :playerId) ")
-    public List<TimeSlot> getTimeSlotsOfTennisPlayerForGivenDate(Long playerId, LocalDateTime startDate, LocalDateTime endDate );
+    List<TimeSlot> getTimeSlotsOfTennisPlayerForGivenDate(Long playerId, LocalDateTime startDate, LocalDateTime endDate );
 
 }

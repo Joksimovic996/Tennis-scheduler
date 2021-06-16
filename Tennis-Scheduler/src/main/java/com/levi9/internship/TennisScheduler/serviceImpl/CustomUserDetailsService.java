@@ -1,31 +1,30 @@
-package com.levi9.internship.TennisScheduler.serviceImpl;
+package com.levi9.internship.tennisscheduler.serviceimpl;
 
-import com.levi9.internship.TennisScheduler.model.TennisPlayer;
-import com.levi9.internship.TennisScheduler.repository.TennisPlayerRepository;
+import com.levi9.internship.tennisscheduler.model.TennisPlayer;
+import com.levi9.internship.tennisscheduler.repository.TennisPlayerRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     protected final Log LOGGER = LogFactory.getLog(getClass());
 
-    @Autowired
-    private TennisPlayerRepository tennisPlayerRepository;
+    private final TennisPlayerRepository tennisPlayerRepository;
 
-    /*
-    @Autowired
+    public CustomUserDetailsService(TennisPlayerRepository tennisPlayerRepository) {
+        this.tennisPlayerRepository = tennisPlayerRepository;
+    }
+
+    /*@Autowired
     private PasswordEncoder passwordEncoder;
-*/
     @Autowired
-	private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;*/
+
 
 
     @Override
@@ -38,7 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
     }
 
-    public void changePassword(String oldPassword, String newPassword) {
+    /*public void changePassword(String oldPassword, String newPassword) {
 
         Authentication currentTennisPlayer = SecurityContextHolder.getContext().getAuthentication();
         String username = currentTennisPlayer.getName();
@@ -57,11 +56,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         TennisPlayer tennisPlayer = (TennisPlayer) loadUserByUsername(username);
 
-        /*
         tennisPlayer.setPassword(passwordEncoder.encode(newPassword));
-         */
 
         tennisPlayerRepository.save(tennisPlayer);
 
-    }
+    }*/
 }

@@ -1,15 +1,13 @@
-package com.levi9.internship.TennisScheduler.modelDTO.timeSlot;
+package com.levi9.internship.tennisscheduler.modeldto.timeslot;
 
-import com.levi9.internship.TennisScheduler.modelDTO.reservation.ReservationDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
+import com.levi9.internship.tennisscheduler.modeldto.reservation.ReservationDTO;
+import com.levi9.internship.tennisscheduler.modeldto.tenniscourt.TennisCourtDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor

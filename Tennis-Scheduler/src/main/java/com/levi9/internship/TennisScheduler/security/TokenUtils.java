@@ -1,6 +1,6 @@
-package com.levi9.internship.TennisScheduler.security;
+package com.levi9.internship.tennisscheduler.security;
 
-import com.levi9.internship.TennisScheduler.model.TennisPlayer;
+import com.levi9.internship.tennisscheduler.model.TennisPlayer;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -26,7 +26,6 @@ public class TokenUtils {
     @Value("Authorization")
     private String AUTH_HEADER;
 
-    private static final String AUDIENCE_UNKNOWN = "unknown";
     private static final String AUDIENCE_WEB = "web";
     private static final String AUDIENCE_MOBILE = "mobile";
     private static final String AUDIENCE_TABLET = "tablet";
@@ -73,14 +72,14 @@ public class TokenUtils {
                 && (!(this.isTokenExpired(token)) || this.ignoreTokenExpiration(token)));
     }
 
-//    public Boolean validateToken(String token, UserDetails userDetails) {
-//        TennisPlayer tennisPlayer = (TennisPlayer) userDetails;
-//        final String username = getUsernameFromToken(token);
-//        final Date created = getIssuedAtDateFromToken(token);
-//
-//        return (username != null && username.equals(userDetails.getUsername())
-//                && !isCreatedBeforeLastPasswordReset(created, tennisPlayer.getLastPasswordResetDate()));
-//    }
+    public Boolean validateToken(String token, UserDetails userDetails) {
+        TennisPlayer tennisPlayer = (TennisPlayer) userDetails;
+        final String username = getUsernameFromToken(token);
+        final Date created = getIssuedAtDateFromToken(token);
+
+        return (username != null && username.equals(userDetails.getUsername())
+                && !isCreatedBeforeLastPasswordReset(created, tennisPlayer.getLastPasswordResetDate()));
+    }
 
     public String getUsernameFromToken(String token) {
         String username;
@@ -110,7 +109,7 @@ public class TokenUtils {
             final Claims claims = this.getAllClaimsFromToken(token);
             audience = claims.getAudience();
         } catch (Exception e) {
-            audience = null;
+            throw new NullPointerException(e.getMessage());
         }
         return audience;
     }
@@ -133,7 +132,7 @@ public class TokenUtils {
     public String getToken(HttpServletRequest request) {
         String authHeader = getAuthHeaderFromHeader(request);
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        if (authHeader != null && (authHeader.startsWith("Bearer ") || authHeader.startsWith("bearer "))) {
             return authHeader.substring(7);
         }
 
@@ -166,7 +165,7 @@ public class TokenUtils {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
-            claims = null;
+            throw new NullPointerException(e.getMessage());
         }
         return claims;
     }

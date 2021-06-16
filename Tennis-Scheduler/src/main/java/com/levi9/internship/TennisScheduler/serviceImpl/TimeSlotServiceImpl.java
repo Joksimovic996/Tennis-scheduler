@@ -1,14 +1,9 @@
-package com.levi9.internship.TennisScheduler.serviceImpl;
+package com.levi9.internship.tennisscheduler.serviceimpl;
 
-import com.levi9.internship.TennisScheduler.exceptions.TennisException;
-import com.levi9.internship.TennisScheduler.mapper.timeSlot.CreateTimeSlotMapper;
-import com.levi9.internship.TennisScheduler.mapper.timeSlot.TimeSlotMapper;
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
-import com.levi9.internship.TennisScheduler.repository.ReservationRepository;
-import com.levi9.internship.TennisScheduler.repository.TennisCourtRepository;
-import com.levi9.internship.TennisScheduler.repository.TimeSlotRepository;
-import com.levi9.internship.TennisScheduler.service.TimeSlotService;
-import org.springframework.http.HttpStatus;
+import com.levi9.internship.tennisscheduler.mapper.timeslot.TimeSlotMapper;
+import com.levi9.internship.tennisscheduler.modeldto.timeslot.TimeSlotDTO;
+import com.levi9.internship.tennisscheduler.repository.TimeSlotRepository;
+import com.levi9.internship.tennisscheduler.service.TimeSlotService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,9 +30,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     @Override
     public List<TimeSlotDTO> getAllTimeSlots() {
         List<TimeSlotDTO> timeSlots = new ArrayList<>();
-        timeSlotRepository.findAll().forEach(timeSlot -> {
-            timeSlots.add(timeSlotMapper.map(timeSlot));
-        });
+        timeSlotRepository.findAll().forEach(timeSlot -> timeSlots.add(timeSlotMapper.map(timeSlot)));
         return timeSlots;
 
     }

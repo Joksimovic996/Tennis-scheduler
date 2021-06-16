@@ -1,9 +1,9 @@
-package com.levi9.internship.TennisScheduler.controller;
+package com.levi9.internship.tennisscheduler.controller;
 
-import com.levi9.internship.TennisScheduler.modelDTO.creditCardDTO.CreditCardDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.reservation.CreateReservationDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.reservation.ReservationDTO;
-import com.levi9.internship.TennisScheduler.serviceImpl.ReservationServiceImpl;
+import com.levi9.internship.tennisscheduler.modeldto.creditcard.CreditCardDTO;
+import com.levi9.internship.tennisscheduler.modeldto.reservation.CreateReservationDTO;
+import com.levi9.internship.tennisscheduler.modeldto.reservation.ReservationDTO;
+import com.levi9.internship.tennisscheduler.serviceimpl.ReservationServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,7 +31,7 @@ public class ReservationController {
             notes = "Provide an ID to look up specific reservation",
             response = ReservationDTO.class
     )
-    public ResponseEntity<?> getReservation(
+    public ResponseEntity<ReservationDTO> getReservation(
             @ApiParam(
                     value = "ID value for the reservation you want to find",
                     required = true
@@ -45,7 +45,7 @@ public class ReservationController {
             value = "Finds a list of all Reservations in the database",
             response = List.class
     )
-    public ResponseEntity<?> getReservations(){
+    public ResponseEntity<List<ReservationDTO>> getReservations(){
         return ResponseEntity.ok(reservationService.getAllReservations());
     }
 
@@ -54,7 +54,7 @@ public class ReservationController {
             value = "Adds a new Reservation",
             notes = "Requires an instance of ReservationDTO and an ID of Tennis player who reserved it"
     )
-    public ResponseEntity<?> addReservation(
+    public ResponseEntity<HttpStatus> addReservation(
             @ApiParam(
                     value = "ID value for the the tennis player who reserved it",
                     required = true
@@ -77,7 +77,7 @@ public class ReservationController {
             value = "Updates the existing Reservation",
             notes = "Requires an instance of CreateReservationDTO and ID of the tennis player"
     )
-    public ResponseEntity<?> updateReservation(
+    public ResponseEntity<HttpStatus> updateReservation(
             @ApiParam(
                     value = "Boolean",
                     required = true
@@ -96,7 +96,7 @@ public class ReservationController {
             value = "Deletes the existing Reservation",
             notes = "Requires an ID of the reservation"
     )
-    public ResponseEntity<?> deleteReservation(
+    public ResponseEntity<HttpStatus> deleteReservation(
             @ApiParam(
                     value = "ID of the Reservation",
                     required = true

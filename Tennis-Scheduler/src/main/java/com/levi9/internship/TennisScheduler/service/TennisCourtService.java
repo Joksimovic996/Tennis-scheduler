@@ -1,28 +1,21 @@
-package com.levi9.internship.TennisScheduler.service;
+package com.levi9.internship.tennisscheduler.service;
 
-import com.levi9.internship.TennisScheduler.exceptions.TennisException;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.CreateTennisCourtDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.UpdateTennisCourtDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
+import com.levi9.internship.tennisscheduler.modeldto.tenniscourt.CreateTennisCourtDTO;
+import com.levi9.internship.tennisscheduler.modeldto.tenniscourt.TennisCourtDTO;
+import com.levi9.internship.tennisscheduler.modeldto.tenniscourt.UpdateTennisCourtDTO;
+import com.levi9.internship.tennisscheduler.modeldto.timeslot.TimeSlotDTO;
 
 import java.util.List;
 
 public interface TennisCourtService {
 
-    public void addTennisCourt(CreateTennisCourtDTO tennisCourtDTO);
-
-    public TennisCourtDTO getTennisCourtById(Long id);
-
-    public TennisCourtDTO getTennisCourtByName(String name);
-
-    public List<TennisCourtDTO> getAllCourts();
-
-    public void updateTennisCourt(UpdateTennisCourtDTO tennisCourtDTO, Long id);
-
-    public void deleteTennisCourt(Long id);
-
-    public List<TimeSlotDTO> getTimeSlotsByTennisCourt(Long id);
+    void addTennisCourt(CreateTennisCourtDTO tennisCourtDTO);
+    TennisCourtDTO getTennisCourtById(Long id);
+    TennisCourtDTO getTennisCourtByName(String name);
+    List<TennisCourtDTO> getAllCourts();
+    void updateTennisCourt(UpdateTennisCourtDTO tennisCourtDTO, Long id);
+    void deleteTennisCourt(Long id);
+    List<TimeSlotDTO> getTimeSlotsByTennisCourt(Long id);
 
 
 }

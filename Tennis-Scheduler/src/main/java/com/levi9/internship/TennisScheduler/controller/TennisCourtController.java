@@ -1,15 +1,16 @@
-package com.levi9.internship.TennisScheduler.controller;
+package com.levi9.internship.tennisscheduler.controller;
 
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.CreateTennisCourtDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.UpdateTennisCourtDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
-import com.levi9.internship.TennisScheduler.serviceImpl.TennisCourtServiceImpl;
+import com.levi9.internship.tennisscheduler.modeldto.tenniscourt.CreateTennisCourtDTO;
+import com.levi9.internship.tennisscheduler.modeldto.tenniscourt.TennisCourtDTO;
+import com.levi9.internship.tennisscheduler.modeldto.tenniscourt.UpdateTennisCourtDTO;
+import com.levi9.internship.tennisscheduler.modeldto.timeslot.TimeSlotDTO;
+import com.levi9.internship.tennisscheduler.serviceimpl.TennisCourtServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -90,6 +91,7 @@ public class TennisCourtController {
             value = "Adds a New Tennis Court",
             notes = "Requires an instance of CreateTennisCourtDTO"
     )
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TennisCourtDTO> addTennisCourt(
             @ApiParam(
                     value = "Instance of CreateTennisCourtDTO",
@@ -117,6 +119,7 @@ public class TennisCourtController {
             value = "Deletes The Existing Tennis Court",
             notes = "Requires an ID of the tennis court"
     )
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TennisCourtDTO> deleteTennisCourt(
             @ApiParam(
                     value = "ID of the Tennis Court",
