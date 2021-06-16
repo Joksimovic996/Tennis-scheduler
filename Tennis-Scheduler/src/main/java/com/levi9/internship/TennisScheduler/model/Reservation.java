@@ -41,4 +41,8 @@ public class Reservation {
 
     @Column(name = "paid")
     private Boolean paid;
+
+
+
+
 }
