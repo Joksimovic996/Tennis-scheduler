@@ -1,17 +1,17 @@
-package com.levi9.internship.TennisScheduler.serviceImpl;
+package com.levi9.internship.tennisscheduler.serviceimpl;
 
-import com.levi9.internship.TennisScheduler.exceptions.TennisException;
-import com.levi9.internship.TennisScheduler.mapper.tennisCourt.CreateTennisCourtMapper;
-import com.levi9.internship.TennisScheduler.mapper.tennisCourt.TennisCourtMapper;
-import com.levi9.internship.TennisScheduler.mapper.tennisCourt.UpdateTennisCourtMapper;
-import com.levi9.internship.TennisScheduler.mapper.timeSlot.TimeSlotMapper;
-import com.levi9.internship.TennisScheduler.model.TennisCourt;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.CreateTennisCourtDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.UpdateTennisCourtDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
-import com.levi9.internship.TennisScheduler.repository.TennisCourtRepository;
-import com.levi9.internship.TennisScheduler.service.TennisCourtService;
+import com.levi9.internship.tennisscheduler.exceptions.TennisException;
+import com.levi9.internship.tennisscheduler.mapper.tenniscourt.CreateTennisCourtMapper;
+import com.levi9.internship.tennisscheduler.mapper.tenniscourt.TennisCourtMapper;
+import com.levi9.internship.tennisscheduler.mapper.tenniscourt.UpdateTennisCourtMapper;
+import com.levi9.internship.tennisscheduler.mapper.timeslot.TimeSlotMapper;
+import com.levi9.internship.tennisscheduler.model.TennisCourt;
+import com.levi9.internship.tennisscheduler.modeldto.tenniscourt.CreateTennisCourtDTO;
+import com.levi9.internship.tennisscheduler.modeldto.tenniscourt.TennisCourtDTO;
+import com.levi9.internship.tennisscheduler.modeldto.tenniscourt.UpdateTennisCourtDTO;
+import com.levi9.internship.tennisscheduler.modeldto.timeslot.TimeSlotDTO;
+import com.levi9.internship.tennisscheduler.repository.TennisCourtRepository;
+import com.levi9.internship.tennisscheduler.service.TennisCourtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -59,9 +59,7 @@ public class TennisCourtServiceImpl implements TennisCourtService {
     @Override
     public List<TennisCourtDTO> getAllCourts() {
         List<TennisCourtDTO> tennisCourts = new ArrayList<>();
-        courtRepository.findAll().forEach(tennisCourt -> {
-            tennisCourts.add(tennisCourtMapper.map(tennisCourt));
-        });
+        courtRepository.findAll().forEach(tennisCourt -> tennisCourts.add(tennisCourtMapper.map(tennisCourt)));
         return tennisCourts;
     }
 
@@ -82,10 +80,8 @@ public class TennisCourtServiceImpl implements TennisCourtService {
 
     @Override
     public List<TimeSlotDTO> getTimeSlotsByTennisCourt(Long id) {
-        List<TimeSlotDTO> timeSlots = new ArrayList<TimeSlotDTO>();
-        courtRepository.getTimeSlotsOfTennisCourt(id).forEach(timeSlot -> {
-            timeSlots.add(timeSlotMapper.map(timeSlot));
-        });
+        List<TimeSlotDTO> timeSlots = new ArrayList<>();
+        courtRepository.getTimeSlotsOfTennisCourt(id).forEach(timeSlot -> timeSlots.add(timeSlotMapper.map(timeSlot)));
         return timeSlots;
     }
 }

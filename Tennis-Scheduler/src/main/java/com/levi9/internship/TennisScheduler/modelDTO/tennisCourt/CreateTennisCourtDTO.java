@@ -1,4 +1,4 @@
-package com.levi9.internship.TennisScheduler.modelDTO.tennisCourt;
+package com.levi9.internship.tennisscheduler.modeldto.tenniscourt;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

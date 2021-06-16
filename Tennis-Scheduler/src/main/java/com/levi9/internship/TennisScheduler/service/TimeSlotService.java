@@ -1,12 +1,12 @@
-package com.levi9.internship.TennisScheduler.service;
+package com.levi9.internship.tennisscheduler.service;
 
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
+import com.levi9.internship.tennisscheduler.modeldto.timeslot.TimeSlotDTO;
 
 import java.util.List;
 
 public interface TimeSlotService {
 
-    public TimeSlotDTO getTimeSlot(Long id);
-    public List<TimeSlotDTO> getAllTimeSlots();
+    TimeSlotDTO getTimeSlot(Long id);
+    List<TimeSlotDTO> getAllTimeSlots();
 
 }

@@ -1,11 +1,10 @@
-package com.levi9.internship.TennisScheduler.service;
+package com.levi9.internship.tennisscheduler.service;
 
-import com.levi9.internship.TennisScheduler.model.Authority;
+import com.levi9.internship.tennisscheduler.model.Authority;
 
 import java.util.List;
 
 public interface AuthorityService {
 
-    List<Authority> findById(Long id);
     List<Authority> findByName(String name);
 }

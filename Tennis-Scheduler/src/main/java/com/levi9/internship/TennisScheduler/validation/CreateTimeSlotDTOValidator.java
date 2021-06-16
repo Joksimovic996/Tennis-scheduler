@@ -1,7 +1,7 @@
-package com.levi9.internship.TennisScheduler.validation;
+package com.levi9.internship.tennisscheduler.validation;
 
-import com.levi9.internship.TennisScheduler.exceptions.TennisException;
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.CreateTimeSlotDTO;
+import com.levi9.internship.tennisscheduler.exceptions.TennisException;
+import com.levi9.internship.tennisscheduler.modeldto.timeslot.CreateTimeSlotDTO;
 import org.springframework.http.HttpStatus;
 
 import javax.validation.ConstraintValidator;
@@ -17,12 +17,6 @@ import java.util.Set;
 
 public class CreateTimeSlotDTOValidator implements ConstraintValidator<ValidCreateTimeSlotDTO, Set<CreateTimeSlotDTO>> {
 
-
-    @Override
-    public void initialize(ValidCreateTimeSlotDTO constraintAnnotation) {
-
-    }
-
     @Override
     public boolean isValid(Set<CreateTimeSlotDTO> timeSlots, ConstraintValidatorContext context) {
         context.disableDefaultConstraintViolation();
@@ -31,7 +25,7 @@ public class CreateTimeSlotDTOValidator implements ConstraintValidator<ValidCrea
             return false;
         } else {
             List<CreateTimeSlotDTO> slots = new ArrayList<>(timeSlots);
-            if(isOverlapping(slots)){
+            if(Boolean.TRUE.equals(isOverlapping(slots))){
                 customMessageForValidation(context, "Time slots cannot overlap with another!");
                 return false;
             }
@@ -40,15 +34,15 @@ public class CreateTimeSlotDTOValidator implements ConstraintValidator<ValidCrea
                     throw new TennisException(HttpStatus.BAD_REQUEST, "Start date and time cannot be null!");
                 if (timeSlot.getEndDateAndTime() == null)
                     throw new TennisException(HttpStatus.BAD_REQUEST, "End date and time cannot be null!");
-                if (isStartBeforeEndDate(timeSlot)) {
-                    if (isDurationOfTimeSlotValid(timeSlot)) {
-                        if (isWorkingDay(timeSlot)) {
-                            if (!isWorkTimeValid(timeSlot, 18,23 )) {
+                if (Boolean.TRUE.equals(isStartBeforeEndDate(timeSlot))) {
+                    if (Boolean.TRUE.equals(isDurationOfTimeSlotValid(timeSlot))) {
+                        if (Boolean.TRUE.equals(isWorkingDay(timeSlot))) {
+                            if (Boolean.FALSE.equals(isWorkTimeValid(timeSlot, 18,23 ))) {
                                 customMessageForValidation(context, "On working days, you can register the slot from 18h to 23h!");
                                 return false;
                             }
                         } else {
-                            if (!isWorkTimeValid(timeSlot, 17, 22)) {
+                            if (Boolean.FALSE.equals(isWorkTimeValid(timeSlot, 17, 22))) {
                                 customMessageForValidation(context, "Working time on weekends is from 17h to 22h!");
                                 return false;
                             }

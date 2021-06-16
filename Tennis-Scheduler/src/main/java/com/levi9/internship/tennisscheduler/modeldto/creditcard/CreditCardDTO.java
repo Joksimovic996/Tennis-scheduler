@@ -1,11 +1,9 @@
-package com.levi9.internship.TennisScheduler.modelDTO.creditCardDTO;
+package com.levi9.internship.tennisscheduler.modeldto.creditcard;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.Month;
 
 @Getter
 @Setter

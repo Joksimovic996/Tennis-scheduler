@@ -1,16 +1,14 @@
-package com.levi9.internship.TennisScheduler.controller;
+package com.levi9.internship.tennisscheduler.controller;
 
-import com.levi9.internship.TennisScheduler.model.TennisPlayer;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.CreateTennisCourtDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.TennisCourtDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.CreateTennisPlayerDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.TennisPlayerDTO;
-import com.levi9.internship.TennisScheduler.service.TennisPlayerService;
+import com.levi9.internship.tennisscheduler.modeldto.tennisplayer.CreateTennisPlayerDTO;
+import com.levi9.internship.tennisscheduler.modeldto.tennisplayer.TennisPlayerDTO;
+import com.levi9.internship.tennisscheduler.service.TennisPlayerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +18,7 @@ import java.util.List;
 @RequestMapping("/tennis/tennis-player")
 public class TennisPlayerController {
 
-    private TennisPlayerService playerService;
+    private final TennisPlayerService playerService;
 
     public TennisPlayerController(TennisPlayerService tennisPlayerService)
     {
@@ -29,12 +27,13 @@ public class TennisPlayerController {
 
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PLAYER')")
     @ApiOperation(
             value = "Finds Tennis Player By ID",
             notes = "Provide an ID to look up specific tennis player",
             response = TennisPlayerDTO.class
     )
-    public ResponseEntity<?> getTennisPlayer(
+    public ResponseEntity<TennisPlayerDTO> getTennisPlayer(
             @ApiParam(
                     value = "ID value for the player you need to retrieve",
                     required = true
@@ -48,27 +47,17 @@ public class TennisPlayerController {
             value = "Finds a List Of All Tennis Players In The System",
             response = List.class
     )
-    public ResponseEntity<?> getTennisPlayers() {
-
+    public ResponseEntity<List<TennisPlayerDTO>> getTennisPlayers() {
         return ResponseEntity.ok(playerService.getAllPlayers());
     }
 
-    @PostMapping()
-    @ApiOperation(
-            value = "Adds a New Tennis Player",
-            notes = "Requires an instance of CreateTennisPlayerDTO"
-    )
-    public ResponseEntity<?> addTennisPlayer(@RequestBody CreateTennisPlayerDTO tennisPlayerDTO) {
-        playerService.addTennisPlayer(tennisPlayerDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
 
     @PutMapping("/{id}")
     @ApiOperation(
             value = "Updates The Existing Tennis Player",
             notes = "Requires an instance of CreateTennisPlayerDTO and ID of the tennis player"
     )
-    public ResponseEntity<?> updateTennisPlayer(@RequestBody CreateTennisPlayerDTO tennisPlayerDTO, @PathVariable Long id) {
+    public ResponseEntity<HttpStatus> updateTennisPlayer(@RequestBody CreateTennisPlayerDTO tennisPlayerDTO, @PathVariable Long id) {
         playerService.updateTennisPlayer(tennisPlayerDTO, id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -78,7 +67,8 @@ public class TennisPlayerController {
             value = "Deletes The Existing Tennis Player",
             notes = "Requires an ID of the tennis player"
     )
-    public ResponseEntity<?> deleteTennisPlayer(
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PLAYER')")
+    public ResponseEntity<HttpStatus> deleteTennisPlayer(
             @ApiParam(
                     value = "ID of the Tennis Player",
                     required = true
@@ -93,7 +83,7 @@ public class TennisPlayerController {
             notes = "Provide player's email address to look up specific tennis player",
             response = TennisPlayerDTO.class
     )
-    public ResponseEntity<?> getTennisPlayerByEmail(
+    public ResponseEntity<TennisPlayerDTO> getTennisPlayerByEmail(
             @ApiParam(
                     value = "Email value from the player you need to retrieve",
                     required = true

@@ -1,4 +1,4 @@
-package com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer;
+package com.levi9.internship.tennisscheduler.modeldto.tennisplayer;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

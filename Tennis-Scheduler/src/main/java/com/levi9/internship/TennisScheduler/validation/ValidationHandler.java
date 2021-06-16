@@ -1,10 +1,12 @@
-package com.levi9.internship.TennisScheduler.validation;
+package com.levi9.internship.tennisscheduler.validation;
 
-import com.levi9.internship.TennisScheduler.exceptions.TennisException;
+import com.levi9.internship.tennisscheduler.exceptions.TennisException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,17 +21,18 @@ import java.util.Map;
 @ControllerAdvice
 public class ValidationHandler extends ResponseEntityExceptionHandler {
 
+    @NotNull
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, @NotNull HttpHeaders headers, @NotNull HttpStatus status, @NotNull WebRequest request) {
 
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        ex.getBindingResult().getAllErrors().forEach(error -> {
 
             String fieldName = ((FieldError) error).getField();
             String message = error.getDefaultMessage();
             errors.put(fieldName, message);
         });
-        return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(TennisException.class)
@@ -39,16 +42,21 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleException(EntityNotFoundException entityNotFoundException) {
-        return new ResponseEntity<>("Entity with that ID does not exist!", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(entityNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity<String> handleException(EmptyResultDataAccessException entityNotFoundException) {
-        return new ResponseEntity<>("Entity with that ID does not exist!", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(entityNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleException(IllegalArgumentException illegalArgumentException) {
-        return new ResponseEntity<>("Some of the input parameters are null!", HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(illegalArgumentException.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> handleException(AccessDeniedException accessDeniedException) {
+        return new ResponseEntity<>(accessDeniedException.getMessage(), HttpStatus.FORBIDDEN);
     }
 }

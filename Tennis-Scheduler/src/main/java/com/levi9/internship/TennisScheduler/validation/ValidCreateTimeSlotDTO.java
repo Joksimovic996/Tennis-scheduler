@@ -1,4 +1,4 @@
-package com.levi9.internship.TennisScheduler.validation;
+package com.levi9.internship.tennisscheduler.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

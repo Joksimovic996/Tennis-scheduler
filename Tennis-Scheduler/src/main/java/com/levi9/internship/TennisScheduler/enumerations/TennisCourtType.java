@@ -1,4 +1,4 @@
-package com.levi9.internship.TennisScheduler.enumerations;
+package com.levi9.internship.tennisscheduler.enumerations;
 
 public enum TennisCourtType {
     CLAY_WITH_ROOF,

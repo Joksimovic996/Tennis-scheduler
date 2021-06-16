@@ -1,4 +1,4 @@
-package com.levi9.internship.TennisScheduler.modelDTO.timeSlot;
+package com.levi9.internship.tennisscheduler.modeldto.timeslot;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
