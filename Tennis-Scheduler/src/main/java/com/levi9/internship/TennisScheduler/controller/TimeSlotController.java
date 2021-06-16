@@ -1,14 +1,16 @@
-package com.levi9.internship.TennisScheduler.controller;
+package com.levi9.internship.tennisscheduler.controller;
 
 
-import com.levi9.internship.TennisScheduler.modelDTO.reservation.ReservationDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.TimeSlotDTO;
-import com.levi9.internship.TennisScheduler.serviceImpl.TimeSlotServiceImpl;
+import com.levi9.internship.tennisscheduler.modeldto.timeslot.TimeSlotDTO;
+import com.levi9.internship.tennisscheduler.serviceimpl.TimeSlotServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class TimeSlotController {
             notes = "Provide an ID to look up specific reservation",
             response = TimeSlotDTO.class
     )
-    public ResponseEntity<?> getTimeSlot(
+    public ResponseEntity<TimeSlotDTO> getTimeSlot(
             @ApiParam(
                     value = "ID value for the time slot you want to find",
                     required = true
@@ -42,7 +44,7 @@ public class TimeSlotController {
             value = "Finds a list of all Time Slots in the database",
             response = List.class
     )
-    public ResponseEntity<?> getTimeSlots(){
+    public ResponseEntity<List<TimeSlotDTO>> getTimeSlots(){
         return ResponseEntity.ok(timeSlotService.getAllTimeSlots());
     }
 

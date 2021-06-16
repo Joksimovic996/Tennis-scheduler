@@ -1,4 +1,4 @@
-package com.levi9.internship.TennisScheduler.model;
+package com.levi9.internship.tennisscheduler.model;
 
 import lombok.*;
 

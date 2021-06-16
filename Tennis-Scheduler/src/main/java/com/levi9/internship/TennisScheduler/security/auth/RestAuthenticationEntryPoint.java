@@ -1,4 +1,4 @@
-package com.levi9.internship.TennisScheduler.security.auth;
+package com.levi9.internship.tennisscheduler.security.auth;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

@@ -1,6 +1,6 @@
-package com.levi9.internship.TennisScheduler.security.auth;
+package com.levi9.internship.tennisscheduler.security.auth;
 
-import com.levi9.internship.TennisScheduler.security.TokenUtils;
+import com.levi9.internship.tennisscheduler.security.TokenUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,9 +14,9 @@ import java.io.IOException;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-    private TokenUtils tokenUtils;
+    private final TokenUtils tokenUtils;
 
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     public TokenAuthenticationFilter(TokenUtils tokenHelper, UserDetailsService userDetailsService) {
         this.tokenUtils = tokenHelper;
@@ -34,15 +34,15 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         if (authToken != null) {
             username = tokenUtils.getUsernameFromToken(authToken);
 
-//            if (username != null) {
-//                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-//
-//                if (tokenUtils.validateToken(authToken, userDetails)) {
-//                    TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
-//                    authentication.setToken(authToken);
-//                    SecurityContextHolder.getContext().setAuthentication(authentication);
-//                }
-//            }
+            if (username != null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+                if (tokenUtils.validateToken(authToken, userDetails)) {
+                    TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
+                    authentication.setToken(authToken);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }

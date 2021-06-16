@@ -1,7 +1,7 @@
-package com.levi9.internship.TennisScheduler.mapper.tennisCourt;
+package com.levi9.internship.tennisscheduler.mapper.tenniscourt;
 
-import com.levi9.internship.TennisScheduler.model.TennisCourt;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisCourt.UpdateTennisCourtDTO;
+import com.levi9.internship.tennisscheduler.model.TennisCourt;
+import com.levi9.internship.tennisscheduler.modeldto.tenniscourt.UpdateTennisCourtDTO;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

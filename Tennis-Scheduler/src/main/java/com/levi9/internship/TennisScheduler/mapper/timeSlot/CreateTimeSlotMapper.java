@@ -1,9 +1,7 @@
-package com.levi9.internship.TennisScheduler.mapper.timeSlot;
+package com.levi9.internship.tennisscheduler.mapper.timeslot;
 
-import com.levi9.internship.TennisScheduler.mapper.reservation.ReservationMapper;
-import com.levi9.internship.TennisScheduler.mapper.tennisCourt.TennisCourtMapper;
-import com.levi9.internship.TennisScheduler.model.TimeSlot;
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.CreateTimeSlotDTO;
+import com.levi9.internship.tennisscheduler.model.TimeSlot;
+import com.levi9.internship.tennisscheduler.modeldto.timeslot.CreateTimeSlotDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

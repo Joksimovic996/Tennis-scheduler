@@ -1,15 +1,13 @@
-package com.levi9.internship.TennisScheduler.model;
+package com.levi9.internship.tennisscheduler.model;
 
-import com.levi9.internship.TennisScheduler.enumerations.PaymentType;
+import com.levi9.internship.tennisscheduler.enumerations.PaymentType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 

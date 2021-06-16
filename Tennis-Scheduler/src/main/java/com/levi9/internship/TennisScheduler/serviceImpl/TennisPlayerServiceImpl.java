@@ -1,15 +1,18 @@
-package com.levi9.internship.TennisScheduler.serviceImpl;
+package com.levi9.internship.tennisscheduler.serviceimpl;
 
 
-import com.levi9.internship.TennisScheduler.exceptions.TennisException;
-import com.levi9.internship.TennisScheduler.mapper.tennisPlayer.CreateTennisPlayerMapper;
-import com.levi9.internship.TennisScheduler.mapper.tennisPlayer.TennisPlayerMapper;
-import com.levi9.internship.TennisScheduler.model.TennisPlayer;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.CreateTennisPlayerDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.TennisPlayerDTO;
-import com.levi9.internship.TennisScheduler.repository.TennisPlayerRepository;
-import com.levi9.internship.TennisScheduler.service.TennisPlayerService;
+import com.levi9.internship.tennisscheduler.exceptions.TennisException;
+import com.levi9.internship.tennisscheduler.mapper.tennisplayer.CreateTennisPlayerMapper;
+import com.levi9.internship.tennisscheduler.mapper.tennisplayer.TennisPlayerMapper;
+import com.levi9.internship.tennisscheduler.model.Authority;
+import com.levi9.internship.tennisscheduler.model.TennisPlayer;
+import com.levi9.internship.tennisscheduler.modeldto.tennisplayer.CreateTennisPlayerDTO;
+import com.levi9.internship.tennisscheduler.modeldto.tennisplayer.TennisPlayerDTO;
+import com.levi9.internship.tennisscheduler.repository.TennisPlayerRepository;
+import com.levi9.internship.tennisscheduler.service.AuthorityService;
+import com.levi9.internship.tennisscheduler.service.TennisPlayerService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,13 +25,17 @@ public class TennisPlayerServiceImpl implements TennisPlayerService {
     private final TennisPlayerRepository tennisPlayerRepository;
     private final TennisPlayerMapper tennisPlayerMapper;
     private final CreateTennisPlayerMapper createTennisPlayerMapper;
+    private final AuthorityService authorityService;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public TennisPlayerServiceImpl(TennisPlayerRepository tennisPlayerRepository, TennisPlayerMapper tennisPlayerMapper, CreateTennisPlayerMapper createTennisPlayerMapper)
+    public TennisPlayerServiceImpl(TennisPlayerRepository tennisPlayerRepository, TennisPlayerMapper tennisPlayerMapper, CreateTennisPlayerMapper createTennisPlayerMapper, AuthorityService authorityService, PasswordEncoder passwordEncoder)
     {
         this.tennisPlayerRepository=tennisPlayerRepository;
         this.tennisPlayerMapper = tennisPlayerMapper;
         this.createTennisPlayerMapper = createTennisPlayerMapper;
+        this.authorityService = authorityService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -45,16 +52,18 @@ public class TennisPlayerServiceImpl implements TennisPlayerService {
                 for (TennisPlayer temp : tennisPlayers) {
                     tennisPlayerDTOS.add(tennisPlayerMapper.map(temp));
                 }
-                return tennisPlayerDTOS;
             }
-        return null;
+        return tennisPlayerDTOS;
     }
 
     @Override
-    public void addTennisPlayer(CreateTennisPlayerDTO tennisPlayerDTO) {
-        TennisPlayer tennisPlayer = new TennisPlayer();
-        tennisPlayer = createTennisPlayerMapper.map(tennisPlayerDTO);
-        tennisPlayerRepository.save(tennisPlayer);
+    public TennisPlayerDTO addTennisPlayer(CreateTennisPlayerDTO tennisPlayerDTO) {
+        TennisPlayer tennisPlayer = createTennisPlayerMapper.map(tennisPlayerDTO);
+        List<Authority> authorities = authorityService.findByName("ROLE_PLAYER");
+        tennisPlayer.setAuthorities(authorities);
+        tennisPlayer.setPassword(passwordEncoder.encode(tennisPlayerDTO.getPassword()));
+        tennisPlayer = tennisPlayerRepository.save(tennisPlayer);
+        return tennisPlayerMapper.map(tennisPlayer);
     }
 
     @Override

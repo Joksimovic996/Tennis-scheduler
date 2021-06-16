@@ -1,17 +1,15 @@
-package com.levi9.internship.TennisScheduler.model;
+package com.levi9.internship.tennisscheduler.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -70,24 +68,24 @@ public class TennisPlayer implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
 }

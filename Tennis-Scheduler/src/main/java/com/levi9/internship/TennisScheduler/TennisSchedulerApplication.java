@@ -1,4 +1,4 @@
-package com.levi9.internship.TennisScheduler;
+package com.levi9.internship.tennisscheduler;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

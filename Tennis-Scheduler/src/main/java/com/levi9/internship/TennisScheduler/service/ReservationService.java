@@ -1,18 +1,16 @@
-package com.levi9.internship.TennisScheduler.service;
+package com.levi9.internship.tennisscheduler.service;
 
-import com.levi9.internship.TennisScheduler.model.Reservation;
-import com.levi9.internship.TennisScheduler.modelDTO.creditCardDTO.CreditCardDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.reservation.CreateReservationDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.reservation.ReservationDTO;
-import com.levi9.internship.TennisScheduler.modelDTO.timeSlot.CreateTimeSlotDTO;
+import com.levi9.internship.tennisscheduler.modeldto.creditcard.CreditCardDTO;
+import com.levi9.internship.tennisscheduler.modeldto.reservation.CreateReservationDTO;
+import com.levi9.internship.tennisscheduler.modeldto.reservation.ReservationDTO;
 
 import java.util.List;
 
 public interface ReservationService {
 
-    public ReservationDTO getReservation(Long id);
-    public List<ReservationDTO> getAllReservations();
-    public void addReservation(CreateReservationDTO reservation, Long tennisPlayerId, CreditCardDTO creditCardDTO);
-    public void updateReservation(Boolean paid,Long id);
-    public void deleteReservationById(Long id);
+    ReservationDTO getReservation(Long id);
+    List<ReservationDTO> getAllReservations();
+    void addReservation(CreateReservationDTO reservation, Long tennisPlayerId, CreditCardDTO creditCardDTO);
+    void updateReservation(Boolean paid,Long id);
+    void deleteReservationById(Long id);
 }

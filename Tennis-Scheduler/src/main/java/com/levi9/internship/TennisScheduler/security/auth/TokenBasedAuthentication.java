@@ -1,4 +1,4 @@
-package com.levi9.internship.TennisScheduler.security.auth;
+package com.levi9.internship.tennisscheduler.security.auth;
 
 import lombok.Getter;
 import lombok.Setter;

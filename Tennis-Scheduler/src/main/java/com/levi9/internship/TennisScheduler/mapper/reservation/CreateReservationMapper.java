@@ -1,9 +1,8 @@
-package com.levi9.internship.TennisScheduler.mapper.reservation;
+package com.levi9.internship.tennisscheduler.mapper.reservation;
 
-import com.levi9.internship.TennisScheduler.model.Reservation;
-import com.levi9.internship.TennisScheduler.modelDTO.reservation.CreateReservationDTO;
+import com.levi9.internship.tennisscheduler.model.Reservation;
+import com.levi9.internship.tennisscheduler.modeldto.reservation.CreateReservationDTO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CreateReservationMapper {

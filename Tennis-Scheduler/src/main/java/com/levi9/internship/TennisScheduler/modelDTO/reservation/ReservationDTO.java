@@ -1,6 +1,6 @@
-package com.levi9.internship.TennisScheduler.modelDTO.reservation;
+package com.levi9.internship.tennisscheduler.modeldto.reservation;
 
-import com.levi9.internship.TennisScheduler.modelDTO.tennisPlayer.TennisPlayerDTO;
+import com.levi9.internship.tennisscheduler.modeldto.tennisplayer.TennisPlayerDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
