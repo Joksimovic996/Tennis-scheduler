@@ -33,4 +33,7 @@ public class TimeSlot {
     @JoinColumn(name = "tennis_court_id")
     private TennisCourt tennisCourt;
 
+    @Column(name = "deleted")
+    private Boolean deleted;
+
 }

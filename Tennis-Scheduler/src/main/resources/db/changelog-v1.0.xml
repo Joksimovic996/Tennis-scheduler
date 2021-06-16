@@ -50,5 +50,10 @@
                  relativeToChangelogFile="true" />
     </changeSet>
 
+    <changeSet id="Add logical delete" author="Dunja">
+    <sqlFile path="scripts/logicalDelete.sql"
+             relativeToChangelogFile="true" />
+    </changeSet>
+
 
 </databaseChangeLog>

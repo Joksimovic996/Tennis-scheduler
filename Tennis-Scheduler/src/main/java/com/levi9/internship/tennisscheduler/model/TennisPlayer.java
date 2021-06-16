@@ -65,6 +65,9 @@ public class TennisPlayer implements UserDetails {
         this.password = password;
     }
 
+    @Column(name = "deleted")
+    private Boolean deleted;
+
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {

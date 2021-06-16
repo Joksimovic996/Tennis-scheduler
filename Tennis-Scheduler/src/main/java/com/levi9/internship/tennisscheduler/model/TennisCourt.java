@@ -34,4 +34,7 @@ public class TennisCourt {
     @Column (name = "price_per_minute")
     private Double pricePerMinute;
 
+    @Column(name = "deleted")
+    private Boolean deleted;
+
 }
