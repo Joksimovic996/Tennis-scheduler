@@ -14,11 +14,15 @@ import java.util.Optional;
 public interface TennisCourtRepository extends JpaRepository<TennisCourt, Long> {
 
 
-    Optional<TennisCourt> findById(Long id);
+    @Query("select t from TennisCourt t where (t.id = :courtid and t.deleted = false)")
+    TennisCourt getTennisCourtById(@Param("courtId") Long id);
 
-    @Query("select t from TennisCourt  t where (lower(t.name)  = lower(:courtName))")
+    @Query("select t from TennisCourt t where (t.deleted = false)")
+    List<TennisCourt> getAllCourts();
+
+    @Query("select t from TennisCourt  t where (lower(t.name)  = lower(:courtName) and t.deleted = false)")
     TennisCourt getTennisCourtByName(@Param("courtName") String name);
 
-    @Query("select s from TimeSlot s where(s.tennisCourt.id = :courtId)")
+    @Query("select s from TimeSlot s where(s.tennisCourt.id = :courtId and s.deleted = false)")
     List<TimeSlot> getTimeSlotsOfTennisCourt(@Param("courtId") Long id);
 }

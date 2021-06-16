@@ -45,7 +45,7 @@ public class TennisCourtServiceImpl implements TennisCourtService {
 
     @Override
     public TennisCourtDTO getTennisCourtById(Long id) {
-        return tennisCourtMapper.map(courtRepository.getById(id));
+        return tennisCourtMapper.map(courtRepository.getTennisCourtById(id));
     }
 
     @Override
@@ -59,13 +59,13 @@ public class TennisCourtServiceImpl implements TennisCourtService {
     @Override
     public List<TennisCourtDTO> getAllCourts() {
         List<TennisCourtDTO> tennisCourts = new ArrayList<>();
-        courtRepository.findAll().forEach(tennisCourt -> tennisCourts.add(tennisCourtMapper.map(tennisCourt)));
+        courtRepository.getAllCourts().forEach(tennisCourt -> tennisCourts.add(tennisCourtMapper.map(tennisCourt)));
         return tennisCourts;
     }
 
     @Override
     public void updateTennisCourt(UpdateTennisCourtDTO tennisCourtDTO, Long id) {
-        TennisCourt temp = courtRepository.getById(id);
+        TennisCourt temp = courtRepository.getTennisCourtById(id);
         TennisCourt updated = updateTennisCourtMapper.map(tennisCourtDTO);
         updated.setId(temp.getId());
         updated.setName(temp.getName());
@@ -75,7 +75,9 @@ public class TennisCourtServiceImpl implements TennisCourtService {
 
     @Override
     public void deleteTennisCourt(Long id) {
-        courtRepository.deleteById(id);
+        TennisCourt tennisCourt = courtRepository.getTennisCourtById(id);
+        tennisCourt.setDeleted(true);
+        courtRepository.save(tennisCourt);
     }
 
     @Override
